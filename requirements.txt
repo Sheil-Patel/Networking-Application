@@ -4,3 +4,4 @@ sendgrid==6.0.5
 flask
 twilio
 pytest
+gspread oauth2client
