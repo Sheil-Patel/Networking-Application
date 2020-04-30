@@ -13,7 +13,7 @@ SHEET_NAME = os.environ.get("SHEET_NAME", "Products")
 # AUTHORIZATION
 #
 
-CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "auth", "spreadsheet_credentials.json")
+CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "auth", "google_api_credentials.json")
 
 AUTH_SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets", #> Allows read/write access to the user's sheets and their properties.
@@ -65,6 +65,6 @@ print("-----------------")
 print("NEW RECORD:")
 print(next_row)
 print("-----------------")
-print("RESPONSE:)
+print("RESPONSE:")
 print(type(response)) #> dict
 print(response) #> {'spreadsheetId': '___', 'updatedRange': '___', 'updatedRows': 1, 'updatedColumns': 5, 'updatedCells': 5}
