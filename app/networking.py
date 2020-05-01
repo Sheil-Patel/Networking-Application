@@ -6,7 +6,7 @@ import os
 #Google Sheets
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-
+#YES LIST IS DYNAMIC AND IS UPDATED WHILE USING MENU
 def get_first_name():
     while True:
         first_name = input("Please input your first name\n")
@@ -84,8 +84,9 @@ if __name__ == "__main__":
         choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to Quit \n")
         
         if choice == "1":
-            #Sheets refresh stuff
+            
             while True:
+                #Sheets refresh stuff
                 client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
                 doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
                 sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
@@ -113,9 +114,16 @@ if __name__ == "__main__":
 
 
         if choice == "2":
-
-            
+            client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
+            doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
+            sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
+            rows = sheet.get_all_records() #> <class 'list'>
             reading_from_sheet(doc, rows)
+
+
+        if choice == "3":
+            #TODO: This is where the email application would go. Dont forget to add an API key and your email address to the dotenv file to use sendgrid
+            #TODO: Alex write and find skeleton emails and code?
 
         if choice == "4":
             print("Quitting...")
