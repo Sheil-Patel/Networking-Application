@@ -145,7 +145,6 @@ if __name__ == "__main__":
             sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
             rows = sheet.get_all_records() #> <class 'list'>
             reading_from_sheet(doc, rows)
-            breakpoint()
 
         if choice == "3":
             
