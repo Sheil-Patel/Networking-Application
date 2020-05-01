@@ -1,11 +1,9 @@
 #Networking-Application/networking.py
 
-#TODO:
-
 import os
 from dotenv import load_dotenv
 import os
-
+#Google Sheets
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -64,23 +62,6 @@ def writing_to_sheet(info,sheet,rows):
     print(response) #> {'spreadsheetId': '___', 'updatedRange': '___', 'updatedRows': 1, 'updatedColumns': 5, 'updatedCells': 5}
 
 if __name__ == "__main__":
-    
-    first_name = get_first_name()
-    last_name = get_last_name()
-    email = get_email()
-    phone_number = get_phone_number()
-    contact = create_contact(first_name, last_name, email, phone_number)
-    
-    networking_contacts = []
-    networking_contacts.append(contact) # Appends contact to list (dictionary to list)
-    #print(networking_contacts[0]["phone_number"]) # should print phone number
-    
-    info = networking_contacts[0]
-
-    load_dotenv()
-
-    DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
-    SHEET_NAME = os.environ.get("SHEET_NAME", "Products")
     #
     # AUTHORIZATION
     #
@@ -93,23 +74,62 @@ if __name__ == "__main__":
     ]
 
     credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILEPATH, AUTH_SCOPE)
-
     
-    #
-    #Sheets stuff
-    #
-    client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
-    doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
-    sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
-    rows = sheet.get_all_records() #> <class 'list'>
-    #
-    # READ VALUES FROM SHEET
-    #
-    reading_from_sheet(doc, rows)
-    #
-    # WRITE VALUES TO SHEET
-    #
-    writing_to_sheet(info,sheet,rows)
+    load_dotenv()
+
+    DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
+    SHEET_NAME = os.environ.get("SHEET_NAME", "Products")
+    while True:
+        print("Hi, this is Alexa, your Networking Virtual Assistant, how may I help you today?")
+        choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to Quit \n")
+        
+        if choice == "1":
+            #Sheets refresh stuff
+            while True:
+                client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
+                doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
+                sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
+                rows = sheet.get_all_records() #> <class 'list'>
+
+                first_name = get_first_name()
+                last_name = get_last_name()
+                email = get_email()
+                phone_number = get_phone_number()
+                contact = create_contact(first_name, last_name, email, phone_number)
+
+                networking_contacts = []
+                networking_contacts.append(contact) # Appends contact to list (dictionary to list)
+                #print(networking_contacts[0]["phone_number"]) # should print phone number
+                info = networking_contacts[0]
+                writing_to_sheet(info,sheet,rows)
+                repeat_1 = input("Would you like to input another contact? Enter 1 if yes, Enter 0 if no\n")
+                if repeat_1 == "1":
+                    print("ok")
+                elif repeat_1 == "0":
+                    break
+                elif (repeat_1 != "1","0"):
+                    print("Invalid Choice")
+                    break
+
+
+        if choice == "2":
+
+            
+            reading_from_sheet(doc, rows)
+
+        if choice == "4":
+            print("Quitting...")
+            break
+
+
+        #
+        # READ VALUES FROM SHEET
+        #
+        
+        #
+        # WRITE VALUES TO SHEET
+        #
+        
    
 
    
