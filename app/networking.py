@@ -6,6 +6,9 @@ import os
 #Google Sheets
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+#Sendgrid
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 #YES LIST IS DYNAMIC AND IS UPDATED WHILE USING MENU
 def get_first_name():
     while True:
@@ -41,9 +44,11 @@ def reading_from_sheet(doc,rows):
     print("-----------------")
     print("SPREADSHEET:", doc.title)
     print("-----------------")
-
+    x = 1
     for row in rows:
-        print(row) #> <class 'dict'>
+        print(x,"-" ,row) #> <class 'dict'>
+        print(" ")
+        x += 1
 def writing_to_sheet(info,sheet,rows):
     next_id = len(rows) + 1 # TODO: should change this to be one greater than the current maximum id value
     
@@ -60,7 +65,20 @@ def writing_to_sheet(info,sheet,rows):
     print("RESPONSE:")
     print(type(response)) #> dict
     print(response) #> {'spreadsheetId': '___', 'updatedRange': '___', 'updatedRows': 1, 'updatedColumns': 5, 'updatedCells': 5}
-
+def send_email(subject="[Daily Briefing] This is a test", html="<p>Hello World</p>"):
+    client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
+    print("CLIENT:", type(client))
+    print("SUBJECT:", subject)
+    #print("HTML:", html)
+    message = Mail(from_email=MY_EMAIL, to_emails=MY_EMAIL, subject=subject, html_content=html)
+    try:
+        response = client.send(message)
+        print("RESPONSE:", type(response)) #> <class 'python_http_client.client.Response'>
+        print(response.status_code) #> 202 indicates SUCCESS
+        return response
+    except Exception as e:
+        print("OOPS", e.message)
+        return None
 if __name__ == "__main__":
     #
     # AUTHORIZATION for google sheets and sendgrid
@@ -79,6 +97,8 @@ if __name__ == "__main__":
 
     DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
     SHEET_NAME = os.environ.get("SHEET_NAME", "Products")
+    SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+    MY_EMAIL = os.environ.get("MY_EMAIL_ADDRESS")
     while True:
         print("\n Hi, this is Alexa, your Networking Virtual Assistant, how may I help you today?\n")
         choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to Search based off a trait, Enter 5 to Quit \n")
@@ -122,28 +142,46 @@ if __name__ == "__main__":
 
 
         if choice == "3":
-            #TODO: This is where the email application would go. Dont forget to add an API key and your email address to the dotenv file to use sendgrid
-            #TODO: Alex write and find skeleton emails and code?
-            #TODO: Date flow diagram? Idts
-            #TODO: Pytest
+            
+            example_subject = "[Daily Briefing] This is a test"
+            example_html = f"""
+            <h3>This is a test of the Daily Briefing Service</h3>
+
+            <h4>Today's Date</h4>
+            <p>Monday, January 1, 2040</p>
+
+            <h4>My Stocks</h4>
+            <ul>
+                <li>MSFT | +04%</li>
+                <li>WORK | +20%</li>
+                <li>ZM | +44%</li>
+            </ul>
+
+            <h4>My Forecast</h4>
+            <ul>
+                <li>10:00 AM | 65 DEGREES | CLEAR SKIES</li>
+                <li>01:00 PM | 70 DEGREES | CLEAR SKIES</li>
+                <li>04:00 PM | 75 DEGREES | CLEAR SKIES</li>
+                <li>07:00 PM | 67 DEGREES | PARTLY CLOUDY</li>
+                <li>10:00 PM | 56 DEGREES | CLEAR SKIES</li>
+            </ul>
+            """
+            send_email(example_subject, example_html)
+        
             break
         if choice == "4":
             #TODO: Loop through sheet and sort based off selected trait(name,company,etc.)
-            
+            break
+
         if choice == "5":
             print("Quitting...")
             break
 
+    #TODO: Alex write and find skeleton emails and code?
+    #TODO: Date flow diagram? Idts
+    #TODO: Pytest
+  
 
-        #
-        # READ VALUES FROM SHEET
-        #
-        
-        #
-        # WRITE VALUES TO SHEET
-        #
-        
-   
 
    
 

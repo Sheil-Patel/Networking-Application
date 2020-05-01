@@ -1,7 +1,7 @@
 python-dotenv
 requests
 sendgrid==6.0.5
-flask
 twilio
 pytest
-gspread oauth2client
+gspread 
+oauth2client
