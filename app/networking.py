@@ -63,7 +63,7 @@ def writing_to_sheet(info,sheet,rows):
 
 if __name__ == "__main__":
     #
-    # AUTHORIZATION
+    # AUTHORIZATION for google sheets and sendgrid
     #
 
     CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "auth", "google_api_credentials.json")
@@ -80,8 +80,8 @@ if __name__ == "__main__":
     DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
     SHEET_NAME = os.environ.get("SHEET_NAME", "Products")
     while True:
-        print("Hi, this is Alexa, your Networking Virtual Assistant, how may I help you today?")
-        choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to Quit \n")
+        print("\n Hi, this is Alexa, your Networking Virtual Assistant, how may I help you today?\n")
+        choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to Search based off a trait, Enter 5 to Quit \n")
         
         if choice == "1":
             
@@ -103,7 +103,7 @@ if __name__ == "__main__":
                 #print(networking_contacts[0]["phone_number"]) # should print phone number
                 info = networking_contacts[0]
                 writing_to_sheet(info,sheet,rows)
-                repeat_1 = input("Would you like to input another contact? Enter 1 if yes, Enter 0 if no\n")
+                repeat_1 = input("\nWould you like to input another contact? Enter 1 if yes, Enter 0 if no\n")
                 if repeat_1 == "1":
                     print("ok")
                 elif repeat_1 == "0":
@@ -124,8 +124,13 @@ if __name__ == "__main__":
         if choice == "3":
             #TODO: This is where the email application would go. Dont forget to add an API key and your email address to the dotenv file to use sendgrid
             #TODO: Alex write and find skeleton emails and code?
-
+            #TODO: Date flow diagram? Idts
+            #TODO: Pytest
+            break
         if choice == "4":
+            #TODO: Loop through sheet and sort based off selected trait(name,company,etc.)
+            
+        if choice == "5":
             print("Quitting...")
             break
 
