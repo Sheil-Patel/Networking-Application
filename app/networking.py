@@ -79,6 +79,12 @@ def send_email(subject="[Daily Briefing] This is a test", html="<p>Hello World</
     except Exception as e:
         print("OOPS", e.message)
         return None
+
+
+
+
+
+
 if __name__ == "__main__":
     #
     # AUTHORIZATION for google sheets and sendgrid
@@ -101,7 +107,7 @@ if __name__ == "__main__":
     MY_EMAIL = os.environ.get("MY_EMAIL_ADDRESS")
     while True:
         print("\n Hi, this is Alexa, your Networking Virtual Assistant, how may I help you today?\n")
-        choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to Search based off a trait, Enter 5 to Quit \n")
+        choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to Quit \n")
         
         if choice == "1":
             
@@ -139,7 +145,7 @@ if __name__ == "__main__":
             sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
             rows = sheet.get_all_records() #> <class 'list'>
             reading_from_sheet(doc, rows)
-
+            breakpoint()
 
         if choice == "3":
             
@@ -169,17 +175,18 @@ if __name__ == "__main__":
             send_email(example_subject, example_html)
         
             break
+            
         if choice == "4":
-            #TODO: Loop through sheet and sort based off selected trait(name,company,etc.)
-            break
-
-        if choice == "5":
             print("Quitting...")
             break
 
     #TODO: Alex write and find skeleton emails and code?
     #TODO: Date flow diagram? Idts
     #TODO: Pytest
+    #TODO: Check if requirement.txt is good
+    #TODO: Fill out the README File
+
+
   
 
 
