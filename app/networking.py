@@ -10,6 +10,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 #YES LIST IS DYNAMIC AND IS UPDATED WHILE USING MENU
+
 def get_first_name():
     while True:
         first_name = input("Please input your first name\n")
@@ -30,10 +31,11 @@ def get_email():
     email = input("Please input email in form 'example@gmail.com'\n")
     return email
 def get_phone_number():
+    
     phone_number = input("Please input your phone number(no dashes please)\n")
     return phone_number
-def create_contact(first_name, last_name, email, phone_number):
-    dictionary = {"first_name": first_name , 
+def create_contact(first_name, last_name, email, phone_number, company):
+    dictionary = {"company":company,"first_name": first_name , 
     "last_name" : last_name , "email" : email , "phone_number" : phone_number}
     return dictionary
 def reading_from_sheet(doc,rows):
@@ -79,12 +81,14 @@ def send_email(subject="[Daily Briefing] This is a test", html="<p>Hello World</
     except Exception as e:
         print("OOPS", e.message)
         return None
-
-
-
-
-
-
+def get_company():
+    company = input("Please input a company\n")
+    while True:
+        if company == "":
+            print("Please input a company please")
+        else:
+            break
+    return company
 if __name__ == "__main__":
     #
     # AUTHORIZATION for google sheets and sendgrid
@@ -105,8 +109,9 @@ if __name__ == "__main__":
     SHEET_NAME = os.environ.get("SHEET_NAME", "Products")
     SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
     MY_EMAIL = os.environ.get("MY_EMAIL_ADDRESS")
+
     while True:
-        print("\n Hi, this is Alexa, your Networking Virtual Assistant, how may I help you today?\n")
+        print("\n Hi, this is Sheliium, your Networking Virtual Assistant, how may I help you today?\n")
         choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to Quit \n")
         
         if choice == "1":
@@ -122,13 +127,15 @@ if __name__ == "__main__":
                 last_name = get_last_name()
                 email = get_email()
                 phone_number = get_phone_number()
-                contact = create_contact(first_name, last_name, email, phone_number)
+                company = get_company()
+                contact = create_contact(first_name, last_name, email, phone_number, company)
 
                 networking_contacts = []
                 networking_contacts.append(contact) # Appends contact to list (dictionary to list)
                 #print(networking_contacts[0]["phone_number"]) # should print phone number
                 info = networking_contacts[0]
                 writing_to_sheet(info,sheet,rows)
+
                 repeat_1 = input("\nWould you like to input another contact? Enter 1 if yes, Enter 0 if no\n")
                 if repeat_1 == "1":
                     print("ok")
@@ -144,6 +151,7 @@ if __name__ == "__main__":
             doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
             sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
             rows = sheet.get_all_records() #> <class 'list'>
+            
             reading_from_sheet(doc, rows)
 
         if choice == "3":
@@ -180,10 +188,42 @@ if __name__ == "__main__":
             break
 
     #TODO: Alex write and find skeleton emails and code?
-    #TODO: Date flow diagram? Idts
     #TODO: Pytest
     #TODO: Check if requirement.txt is good
     #TODO: Fill out the README File
+
+
+    #TODO:  Option to send intro email template after creating a contact
+     
+    #TODO: Fix Suggestions option by 1. Showing all contacts 2. Giving you the option of selecting them and giving important info like "notes" and "where we met" --> Reccomendations
+
+    # Suggestions
+        # - Introductory
+        # - Cold email(It would fill in the template with the information in the contacts)
+        # - Update to network
+            # - Academic Performance
+            # - Internships offer
+        # - Thank you note
+            # - Interview followup
+            # - Networking event
+            # - Coffee Chat 
+            # - Introduction email via contact(Thank you for introducing me to blah blah blah)
+            
+    # Automated Email Notification(Heroku)
+        # Let person know to update last contacted on sheets
+
+    #TODO: Prompt to ask for more information to fill in email(Later goal)
+    #TODO:  #contact added									
+                #1	Add today's date to date added and copy that date to date last contacted (highlight this yellow) and copy also to date of last push notification sent for heroku to base off of								
+                #2	After threshold -> push over date last contacted to second most recent date of contact (keep formatting)								
+                #3	add today's date to date of last push notification sent and to date last contacted (highlight this)								
+                #4	new date of last push notifaction sent is threshold								
+									
+    #TODO:  Fix Headers, Templates(Option 3), Heroku
+    #TODO:  
+    #TODO:  
+    #TODO:  
+    #TODO:  
 
 
   
