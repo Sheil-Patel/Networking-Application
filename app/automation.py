@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 import os
-from datetime import datetime
+from datetime import datetime,timedelta 
 #Google Sheets
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -34,11 +34,24 @@ if __name__ == "__main__":
   last_notification_info = []
   last_notification = sheet.col_values(11)
   remove = last_notification.pop(0) #removes header
+  time_diff = timedelta(days = 15)
+
+  date_obj_ex = datetime.strptime("05/02/20", "%m/%d/%y" )
   
-  for dates in last_notification:
-    if (dates != ""):
-      date_obj = datetime.strptime(dates,"%m/%d/%y")
-      print(date_obj)
+  tiempo = date_obj_ex + time_diff
+  print(tiempo)
+
+  #x = 1
+  #for dates in last_notification:
+  #  if (dates != ""):
+  #    date_obj = datetime.strptime(dates,"%m/%d/%y")
+  #    cell = {"column" : 8 , "row" : x , "value" : date_obj}
+  #    last_notification_info.append(cell)
+  #    x+=1
+  #  
+  #  for contacts in last_notification_info:
+  #    date = contacts["value"]
+      
 
 
 
