@@ -31,6 +31,12 @@ if __name__ == "__main__":
   sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
   rows = sheet.get_all_records() #> <class 'list'>
 
+
+  date_added = sheet.col_values(8)
+  for dates in date_added:
+    if (dates != ""):
+      print(type(dates))
+
   #Access data
   # sheet.col_values(1)
   # sheet.cell(2,1).value

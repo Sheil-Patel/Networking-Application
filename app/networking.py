@@ -22,14 +22,14 @@ def get_company():
     return company
 def get_first_name():
     while True:
-        first_name = input("Please input your first name\n")
+        first_name = input("Please input the first name\n")
         if first_name == "":
             print("Please input a first name please\n")
         else:
             break
     return first_name
 def get_last_name():
-    last_name = input("Please input your last name\n")
+    last_name = input("Please input the last name\n")
     while True:
         if last_name == "":
             print("Please input a last name please\n")
@@ -53,10 +53,21 @@ def get_date_added():
     today = datetime.today()
     d3 = today.strftime("%m/%d/%y")
     return d3
-def create_contact(company, first_name, last_name, email, phone_number,  where_we_met, notes, date_added):
+def get_date_last_contacted():
+    today = datetime.today()
+    date_last_contacted = today.strftime("%m/%d/%y")
+    return date_last_contacted
+def get_second_most_recent_date():
+    return ""
+def get_date_of_last_notification():
+    today = datetime.today()
+    date_of_last_notification = today.strftime("%m/%d/%y")
+    return date_of_last_notification
+def create_contact(company, first_name, last_name, email, phone_number,  where_we_met, notes, date_added, date_last_contacted, second_most_recent_date, date_of_last_notification):
     dictionary = {"company":company,"first_name": first_name , 
     "last_name" : last_name , "email" : email , "phone_number" : phone_number, "where_we_met": where_we_met, 
-    "notes": notes, "date_added": date_added}
+    "notes": notes, "date_added": date_added, "date_last_contacted" : date_last_contacted, "second_most_recent_date": second_most_recent_date, 
+    "date_of_last_notification" : date_of_last_notification}
     return dictionary
 def reading_from_sheet(doc,rows):
     #
@@ -147,8 +158,13 @@ if __name__ == "__main__":
                 where_we_met = get_where_we_met()
                 notes = get_notes()
                 date_added = get_date_added()
+                date_last_contacted = get_date_last_contacted()
+                second_most_recent_date = get_second_most_recent_date()
+                date_of_last_notification = get_date_of_last_notification()
+            
                 
-                contact = create_contact(company, first_name, last_name, email, phone_number, where_we_met, notes, date_added)
+                contact = create_contact(company, first_name, last_name, email, phone_number, where_we_met, notes, 
+                date_added,date_last_contacted, second_most_recent_date, date_of_last_notification)
 
                 networking_contacts = []
                 networking_contacts.append(contact) # Appends contact to list (dictionary to list)
