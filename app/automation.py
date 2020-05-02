@@ -31,11 +31,16 @@ if __name__ == "__main__":
   sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
   rows = sheet.get_all_records() #> <class 'list'>
 
-
-  date_added = sheet.col_values(8)
-  for dates in date_added:
+  last_notification_info = []
+  last_notification = sheet.col_values(11)
+  remove = last_notification.pop(0) #removes header
+  
+  for dates in last_notification:
     if (dates != ""):
-      print(type(dates))
+      date_obj = datetime.strptime(dates,"%m/%d/%y")
+      print(date_obj)
+
+
 
   #Access data
   # sheet.col_values(1)
