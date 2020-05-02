@@ -3,19 +3,28 @@
 import os
 from dotenv import load_dotenv
 import os
+from datetime import datetime
 #Google Sheets
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 #Sendgrid
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-#YES LIST IS DYNAMIC AND IS UPDATED WHILE USING MENU
 
+
+def get_company():
+    company = input("Please input a company\n")
+    while True:
+        if company == "":
+            print("Please input a company please")
+        else:
+            break
+    return company
 def get_first_name():
     while True:
         first_name = input("Please input your first name\n")
         if first_name == "":
-            print("Please input a first name please")
+            print("Please input a first name please\n")
         else:
             break
     return first_name
@@ -23,20 +32,31 @@ def get_last_name():
     last_name = input("Please input your last name\n")
     while True:
         if last_name == "":
-            print("Please input a last name please")
+            print("Please input a last name please\n")
         else:
             break
     return last_name
 def get_email():
-    email = input("Please input email in form 'example@gmail.com'\n")
+    email = input("Please input email. For example in form 'example@gmail.com'\n")
     return email
 def get_phone_number():
     
-    phone_number = input("Please input your phone number(no dashes please)\n")
+    phone_number = input("Please input your phone number\n")
     return phone_number
-def create_contact(first_name, last_name, email, phone_number, company):
+def get_where_we_met():
+    where_we_met = input("Where did you meet this contact?\n")
+    return where_we_met
+def get_notes():
+    notes = input("Please input any additional notes you had on this contact\n")
+    return notes
+def get_date_added():
+    today = datetime.today()
+    d3 = today.strftime("%m/%d/%y")
+    return d3
+def create_contact(company, first_name, last_name, email, phone_number,  where_we_met, notes, date_added):
     dictionary = {"company":company,"first_name": first_name , 
-    "last_name" : last_name , "email" : email , "phone_number" : phone_number}
+    "last_name" : last_name , "email" : email , "phone_number" : phone_number, "where_we_met": where_we_met, 
+    "notes": notes, "date_added": date_added}
     return dictionary
 def reading_from_sheet(doc,rows):
     #
@@ -81,14 +101,10 @@ def send_email(subject="[Daily Briefing] This is a test", html="<p>Hello World</
     except Exception as e:
         print("OOPS", e.message)
         return None
-def get_company():
-    company = input("Please input a company\n")
-    while True:
-        if company == "":
-            print("Please input a company please")
-        else:
-            break
-    return company
+
+
+
+
 if __name__ == "__main__":
     #
     # AUTHORIZATION for google sheets and sendgrid
@@ -123,12 +139,16 @@ if __name__ == "__main__":
                 sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
                 rows = sheet.get_all_records() #> <class 'list'>
 
+                company = get_company()
                 first_name = get_first_name()
                 last_name = get_last_name()
                 email = get_email()
                 phone_number = get_phone_number()
-                company = get_company()
-                contact = create_contact(first_name, last_name, email, phone_number, company)
+                where_we_met = get_where_we_met()
+                notes = get_notes()
+                date_added = get_date_added()
+                
+                contact = create_contact(company, first_name, last_name, email, phone_number, where_we_met, notes, date_added)
 
                 networking_contacts = []
                 networking_contacts.append(contact) # Appends contact to list (dictionary to list)
