@@ -59,7 +59,7 @@ if __name__ == "__main__":
     if threshold_date == today: # Fires when 15 days past the last pushed date is equivalent to today's date
       row_num = contacts["row"]
       
-      sheet.update_cell(10, row_num, date_last_contacted[row_num])
+      sheet.update_cell(10, row_num, date_last_contacted[row_num]) # Updates Date of Last Contacte -> Second most recent date of contact
       sheet.update_cell(9,row_num, threshold_date)# Updates Date of last pushed -> Date of Last Contacted
 
 
