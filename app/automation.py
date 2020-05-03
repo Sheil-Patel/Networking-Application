@@ -37,32 +37,39 @@ if __name__ == "__main__":
 
   time_diff = timedelta(days = 15)
   today = datetime.today()
+  date_str = datetime.strftime(today,"%m/%d/%y")
   
-  date_last_contacted_info = []
+
   date_last_contacted = sheet.col_values(9)
   remove = date_last_contacted.pop(0) #removes header
-
+  
+  
+ 
 
   #date_obj_ex = datetime.strptime("05/02/20", "%m/%d/%y")
-  
-  x = 1
+
+  x = 2
   for dates in last_notification:
       date_obj = datetime.strptime(dates,"%m/%d/%y")
-      cell = {"column" : 11 , "row" : x , "value" : date_obj}
+      threshold_date = time_diff + date_obj
+      threshold_date_str = datetime.strftime(threshold_date,"%m/%d/%y")
+      cell = {"column" : 11 , "row" : x , "datetime" : date_obj, "string": dates, "threshold": threshold_date_str}
       last_notification_info.append(cell)
       x+=1
-
+  
   
   for contacts in last_notification_info:
-    last_push_date = contacts["value"]
-    threshold_date = time_diff + last_push_date
-    if threshold_date == today: # Fires when 15 days past the last pushed date is equivalent to today's date
+    threshold = contacts["threshold"]
+    if threshold == date_str: # Fires when 15 days past the last pushed date is equivalent to today's date
       row_num = contacts["row"]
-      
-      sheet.update_cell(10, row_num, date_last_contacted[row_num]) # Updates Date of Last Contacte -> Second most recent date of contact
-      sheet.update_cell(9,row_num, threshold_date)# Updates Date of last pushed -> Date of Last Contacted
+      plug = date_last_contacted[row_num-2]
+      sheet.update_cell(row_num, 10, plug ) # Updates Date of Last Contact -> Second most recent date of contact
+      sheet.update_cell(row_num, 9, date_str)# Updates Date of last push notifaction(Current Date)-> Date of Last Contacted
+      sheet.update_cell(row_num, 11, date_str) # Updates date of last push notification --> Current Date
 
-
+#bgColor = sheet.newColor()
+#range = sheet.getRange("B2:D5")
+#range.setBackgroundObject(bgColor)
 
   #Access data
   # sheet.col_values(1)
