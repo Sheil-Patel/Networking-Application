@@ -34,24 +34,33 @@ if __name__ == "__main__":
   last_notification_info = []
   last_notification = sheet.col_values(11)
   remove = last_notification.pop(0) #removes header
+
   time_diff = timedelta(days = 15)
-
-  date_obj_ex = datetime.strptime("05/02/20", "%m/%d/%y" )
+  today = datetime.today()
   
-  tiempo = date_obj_ex + time_diff
-  print(tiempo)
+  date_last_contacted_info = []
+  date_last_contacted = sheet.col_values(9)
+  remove = date_last_contacted.pop(0) #removes header
 
-  #x = 1
-  #for dates in last_notification:
-  #  if (dates != ""):
-  #    date_obj = datetime.strptime(dates,"%m/%d/%y")
-  #    cell = {"column" : 8 , "row" : x , "value" : date_obj}
-  #    last_notification_info.append(cell)
-  #    x+=1
-  #  
-  #  for contacts in last_notification_info:
-  #    date = contacts["value"]
+
+  #date_obj_ex = datetime.strptime("05/02/20", "%m/%d/%y")
+  
+  x = 1
+  for dates in last_notification:
+      date_obj = datetime.strptime(dates,"%m/%d/%y")
+      cell = {"column" : 11 , "row" : x , "value" : date_obj}
+      last_notification_info.append(cell)
+      x+=1
+
+  
+  for contacts in last_notification_info:
+    last_push_date = contacts["value"]
+    threshold_date = time_diff + last_push_date
+    if threshold_date == today: # Fires when 15 days past the last pushed date is equivalent to today's date
+      row_num = contacts["row"]
       
+      sheet.update_cell(10, row_num, date_last_contacted[row_num])
+      sheet.update_cell(9,row_num, threshold_date)# Updates Date of last pushed -> Date of Last Contacted
 
 
 
