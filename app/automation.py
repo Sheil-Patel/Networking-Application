@@ -43,9 +43,6 @@ if __name__ == "__main__":
   date_last_contacted = sheet.col_values(9)
   remove = date_last_contacted.pop(0) #removes header
   
-  
- 
-
   #date_obj_ex = datetime.strptime("05/02/20", "%m/%d/%y")
 
   x = 2
