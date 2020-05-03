@@ -14,7 +14,6 @@ from gspread_formatting import *
 
 
 
-
 ### Formatting Definitions - use any of these for the last parameter in the 'format_cell_range() function' 
 # detailed notes found here: https://pypi.org/project/gspread-formatting/    https://stackoverflow.com/questions/54179490/gspread-how-to-change-the-color-of-an-entire-row
 
