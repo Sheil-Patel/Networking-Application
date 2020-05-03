@@ -121,6 +121,22 @@ if __name__ == "__main__":
     # AUTHORIZATION for google sheets and sendgrid
     #
 
+
+
+### if cell in sheet ("Personal information") is blank then prompt for this, if not -
+
+   #     first_nameinput = input("What is your first name, as you would like to be known by to recruiters?")
+   #     last_name = input("What is your last name?")
+   #     university = input("What University do you go to. Ex. 'Georgetown University' ")
+   #     majors = input("What majors are you currently pursuing. Ex. Finance and Operations and Information Management ")
+   #     classYear = input("What year are you? Ex. Sophomore")
+#
+#
+#
+
+
+
+
     CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "auth", "google_api_credentials.json")
 
     AUTH_SCOPE = [
@@ -138,8 +154,8 @@ if __name__ == "__main__":
     MY_EMAIL = os.environ.get("MY_EMAIL_ADDRESS")
 
     while True:
-        print("\n Hi, this is Sheliium, your Networking Virtual Assistant, how may I help you today?\n")
-        choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to Quit \n")
+        print("\n Hi, this is Donnie Azoff, your Networking Virtual Assistant, how may I help you today?\n")
+        choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to edit basic information, Enter 5 to Quit \n")
         
         if choice == "1":
             
@@ -218,8 +234,40 @@ if __name__ == "__main__":
             send_email(example_subject, example_html)
         
             break
+
+        if choice == "4": 
+            print("Here's the basic information we have for you!:")
+            print(f"First Name: {first_name}")
+            print(f"Last Name: {last_name}")
+            print(f"Place of Study: {university}")
+            print(f"Year: {classYear}")
+            decision = input("Are you sure you want to edit your response? - (y/n)")
+            while decision != "y" or decision != "n":
+                decision = input("Are you sure you want to edit your response? - (y/n)")
+            if decision  == "n":
+                print("Okay!")
+                break
+            if decision == "y":
+                first_nameinput = input("What is your first name, as you would like to be known by to recruiters?")
+                last_name = input("What is your last name?")
+                university = input("What University do you go to. Ex. 'Georgetown University' ")
+                majors = input("What majors are you currently pursuing. Ex. Finance and Operations and Information Management ")
+                classYear = input("What year are you? Ex. Sophomore")
+
+                print("Here are your updated responses: ")
+                print("Here's the basic information we have for you!:")
+                print(f"First Name: {first_name}")
+                print(f"Last Name: {last_name}")
+                print(f"Place of Study: {university}")
+                print(f"Year: {classYear}")
+
+
+
+
+
+
             
-        if choice == "4":
+        if choice == "5":
             print("Quitting...")
             break
 
@@ -263,7 +311,36 @@ if __name__ == "__main__":
 
 
   
+"""
+Dear name:
+
+I hope this email finds you well!
+
+My name is (me); I'm a {year}} at Georgetown's McDonough School of Business studying {major/majors}. {reccommender}} recommended that I reach out to you to learn a bit more about {firm"}.
+
+If you have some time, I would love to chat and gain your perspective on your group and the firm overall. Would you have any availability in the coming weeks?
+
+I've also attached my resume below, should it be of use!
+
+Thank you for your time, I look forward to hearing from you!
+
+Best,
+
+{name}
 
 
-   
+Dear Chris,
+
+My name is {name}}; I'm a {year}} at Georgetown's McDonough School of Business studying {major/majors}. 
+I just wanted to thank you for taking the time to talk to me at {EVENT}}. 
+I enjoyed learning about your experience at {Firm}. I would love to hear more about your experience at Perella. If you have time to talk later in the week so I can ask more about the firm, I would greatly appreciate it.
+
+Best,
+Patrick
+
+
+"""
+
+
+
 
