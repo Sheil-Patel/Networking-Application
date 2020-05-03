@@ -12,7 +12,7 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from gspread_formatting import *
 
-
+### This is the most recent one without the templates tho! FUCK
 
 
 ### Formatting Definitions - use any of these for the last parameter in the 'format_cell_range() function' 
