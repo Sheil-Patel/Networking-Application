@@ -10,6 +10,36 @@ from oauth2client.service_account import ServiceAccountCredentials
 #Sendgrid
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from gspread_formatting import *
+
+### This is the most recent one without the templates tho! FUCK
+
+
+### Formatting Definitions - use any of these for the last parameter in the 'format_cell_range() function' 
+# detailed notes found here: https://pypi.org/project/gspread-formatting/    https://stackoverflow.com/questions/54179490/gspread-how-to-change-the-color-of-an-entire-row
+
+format_header = cellFormat(
+    backgroundColor = color(204, 204, 204),
+    textFormat =textFormat(bold=True, foregroundColor=color(59, 117, 203)) , 
+    horizontalAlignment = 'CENTER'
+)
+
+def print_headers(rows,sheet):
+    if len(rows) >= 1:
+        print("No Header Printed")
+    else: 
+        row = ["Company", "First Name", "Last Name" , "Email", "Phone Number", "Where we met?", "Notes", "Date Added", "Date of last Contact", "2nd Most Recent Date of Contact", "Date of Last Push Notification Sent"]
+        index = 1
+        sheet.insert_row(row,index)
+        format_cell_range(sheet, 'A1:K1', format_header)
+        #gspread_formatting(sheet, 'A1:K1' , format_header)
+        set_row_height(sheet, '1', 77)
+        set_column_width(sheet, 'A:K', 240)
+        set_frozen(sheet, rows = 1)
+
+
+
+
 
 
 def get_company():
@@ -142,6 +172,15 @@ if __name__ == "__main__":
         choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to Quit \n")
         
         if choice == "1":
+
+            client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
+            doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
+            sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
+            rows = sheet.get_all_records() #> <class 'list'>
+
+            print_headers(rows,sheet)
+
+            
             
             while True:
                 #Sheets refresh stuff
