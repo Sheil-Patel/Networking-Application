@@ -1,3 +1,4 @@
+
 python-dotenv
 requests
 sendgrid==6.0.5
@@ -5,3 +6,4 @@ twilio
 pytest
 gspread 
 oauth2client
+gspread_formatting
