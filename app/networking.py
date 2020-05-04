@@ -1,5 +1,6 @@
 #Networking-Application/networking.py
 #COPY PASTED SO SHOULD WORK
+#making sure the copies are the same
 
 import os
 from dotenv import load_dotenv
