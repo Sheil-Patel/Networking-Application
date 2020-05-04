@@ -1,7 +1,6 @@
 #Networking-Application/networking.py
 #COPY PASTED SO SHOULD WORK
-
-# 1 commit
+#2 commit
 #making sure the copies are the same
 
 import os
