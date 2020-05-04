@@ -309,6 +309,7 @@ if __name__ == "__main__":
             yourcontactINFO = rows2[0]      
 
 
+
             print("Who would you like get suggestions for?")
 
             x = 1
@@ -331,7 +332,7 @@ if __name__ == "__main__":
 
                 <p>Dear {contactINFO['First Name']}, </p>
 
-                <p> I hope this email finds you well. </p>
+                <p>I hope this email finds you well. </p>
 
                 <p>I just wanted to reach out and thank you for taking the time to talk to me at the {contactINFO['Where we met?']}. I am really interested in continuing to learn more about {contactINFO['Company']} and would love to hear more about your experiences so far. 
                 Would you have any availability to chat over the phone sometime this week? I have attached my resume as a guide to some of my previous work. Thank you in advance and I hope to talk to you soon! </p>
@@ -339,7 +340,25 @@ if __name__ == "__main__":
                 <p>Best, </p>
                 <p>{yourcontactINFO['Your First Name']}</p>
 
-                """ }
+                """},
+                {"name": "Linkedin Cold Call", "Template": f"""
+
+                <p>Hi {contactINFO['First Name']}, </p>
+
+               <p>My name is {yourcontactINFO['Your First Name']} {yourcontactINFO['Your Last Name']} and I am a {yourcontactINFO['Your Class Year']} at {yourcontactINFO['Your Current University']} studying {yourcontactINFO['Your Majors']}. 
+                I found your contact information on Linkedin. </p>
+
+                <p>I am currently going through the undergraduate recruiting process for {contactINFO['Company']} and I am very interested in continuing to learn more. </p>
+
+                <p>I would love to speak on the phone over your experience at {contactINFO['Company']} if you have any time this week or next week. Please let me know if this would be possible. Looking forward to hearing from you. 
+
+                Please find my resume attached as a guide to my previous work experience. </p>
+
+                <p>Best regards, </p>
+
+                <p>{yourcontactINFO['Your First Name']}</p>
+                
+                """ },
             
 
             ]
@@ -351,6 +370,8 @@ if __name__ == "__main__":
                 print(f"Suggestion {y}: {suggest['name']} ")
                 print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
                 y += 1
+            
+
 
             suggestionNumber = int(input("Please Enter The Corresponding Number To See The Suggestion: ")) - 1
             print("Please Find the Requested Suggestion Below: ")
@@ -365,6 +386,7 @@ if __name__ == "__main__":
 
             html = f"""
 
+            <img src="https://i0.wp.com/arielle.com.au/wp-content/uploads/2016/04/urban-nyc-light.jpg">
 
             
             <h3> Hi, {yourcontactINFO['Your First Name']}! </h3>
