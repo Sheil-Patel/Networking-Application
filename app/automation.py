@@ -6,9 +6,8 @@ from datetime import datetime,timedelta
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-
-
 if __name__ == "__main__":
+  
   #Authorization
   CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "auth", "google_api_credentials.json")
 
@@ -63,23 +62,3 @@ if __name__ == "__main__":
       sheet.update_cell(row_num, 10, plug ) # Updates Date of Last Contact -> Second most recent date of contact
       sheet.update_cell(row_num, 9, date_str)# Updates Date of last push notifaction(Current Date)-> Date of Last Contacted
       sheet.update_cell(row_num, 11, date_str) # Updates date of last push notification --> Current Date
-
-#bgColor = sheet.newColor()
-#range = sheet.getRange("B2:D5")
-#range.setBackgroundObject(bgColor)
-
-  #Access data
-  # sheet.col_values(1)
-  # sheet.cell(2,1).value
-
-  # update cell
-  # sheet.update_cell(3,1,"Bobcats")
-
-  #Findining Specific object and returning position
-  # cell_list = sheet.findall("Cats")
-  # for cell in cell_list:
-  #         print(cell.value)
-  #         print(cell.row)
-  #         print(cell.col)
-
-  
