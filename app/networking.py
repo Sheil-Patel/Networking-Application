@@ -326,58 +326,40 @@ if __name__ == "__main__":
 
             contactINFO = rows[suggestion_for]
 
+            ## have to initialize variables in the template and then update them
+            opportunities = ""
+
+    
             suggestions = [ 
                 { "name": "Networking Event Follow up", 
                 "Template":  f""" 
-
                 <p>Dear {contactINFO['First Name']}, </p>
-
                 <p>I hope this email finds you well. </p>
-
                 <p>I just wanted to reach out and thank you for taking the time to talk to me at the {contactINFO['Where we met?']}. I am really interested in continuing to learn more about {contactINFO['Company']} and would love to hear more about your experiences so far. 
                 Would you have any availability to chat over the phone sometime this week? I have attached my resume as a guide to some of my previous work. Thank you in advance and I hope to talk to you soon! </p>
-                
                 <p>Best, </p>
                 <p>{yourcontactINFO['Your First Name']}</p>
-
                 """},
                 {"name": "Linkedin Cold Call", "Template": f"""
-
                 <p>Hi {contactINFO['First Name']}, </p>
-
                <p>My name is {yourcontactINFO['Your First Name']} {yourcontactINFO['Your Last Name']} and I am a {yourcontactINFO['Your Class Year']} at {yourcontactINFO['Your Current University']} studying {yourcontactINFO['Your Majors']}. 
                 I found your contact information on Linkedin. </p>
-
                 <p>I am currently going through the undergraduate recruiting process for {contactINFO['Company']} and I am very interested in continuing to learn more. </p>
-
                 <p>I would love to speak on the phone over your experience at {contactINFO['Company']} if you have any time this week or next week. Please let me know if this would be possible. Looking forward to hearing from you. 
-
                 Please find my resume attached as a guide to my previous work experience. </p>
-
                 <p>Best regards, </p>
-
                 <p>{yourcontactINFO['Your First Name']}</p>
-                
                 """ },
                 {"name": "Coffee Chat Follow Up", 
                 "Template": f"""
-
                 <p>Hi {contactINFO['First Name']}, </p>
-
                 <p> I just wanted to follow up after our coffee chat. Thanks a lot for taking the time today; I really enjoyed hearing about {opportunities}! </p>
                 <p> I would love to learn a little more about {contactINFO['Company']}. Would you be able to connect me with an anyone else at the firm to hear about his or her experience? </p>
                 <p> Thanks again and I look forward to staying in touch!</p>
-
                 <p> Best, </p>
                 <p>{yourcontactINFO['Your First Name']}</p>
-
-                
-
-                """
-            
-
+                """ }
             ]
-
             print("What template would you like to see?")
 
             y = 1
@@ -392,9 +374,20 @@ if __name__ == "__main__":
             if suggestionNumber == 2:
                 print("You selected Coffee Chat Template")
                 print("Help us fill out this template for you by providing us with a bit of information!")
-                opportunities = input("Please complete the following, 'I really enjoyed hearing about (.......)")
+                oppLIST = input("Please complete the following, 'I really enjoyed hearing about (.......)")
+                opportunities = oppLIST
                 print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
                 print("Please Find the Requested Suggestion Below: ")
+
+                suggestions[2].update( {"Template": f"""
+                <p>Hi {contactINFO['First Name']}, </p>
+                <p> I just wanted to follow up after our coffee chat. Thanks a lot for taking the time today; I really enjoyed hearing about {opportunities}! </p>
+                <p> I would love to learn a little more about {contactINFO['Company']}. Would you be able to connect me with an anyone else at the firm to hear about his or her experience? </p>
+                <p> Thanks again and I look forward to staying in touch!</p>
+                <p> Best, </p>
+                <p>{yourcontactINFO['Your First Name']}</p>
+                """  } )
+
                 print(suggestions[suggestionNumber]["Template"])
             else: 
                 print("Please Find the Requested Suggestion Below: ")
