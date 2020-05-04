@@ -11,8 +11,9 @@ from oauth2client.service_account import ServiceAccountCredentials
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from gspread_formatting import *
+from pprint import pprint
 
-
+##okay all set!! 
 
 ### Formatting Definitions - use any of these for the last parameter in the 'format_cell_range() function' 
 # detailed notes found here:     https://stackoverflow.com/questions/54179490/gspread-how-to-change-the-color-of-an-entire-row
@@ -33,6 +34,7 @@ def print_headers(rows,sheet):
         set_row_height(sheet, '1', 77)
         set_column_width(sheet, 'A:K', 240)
         set_frozen(sheet, rows = 1)
+
 
 def print_personal_headers(rows2,sheet2):
     if not rows2:
@@ -59,6 +61,9 @@ def print_personal_headers(rows2,sheet2):
         set_row_height(sheet2, '1', 77)
         set_column_width(sheet2, 'A:E', 240)
         set_frozen(sheet2, rows = 1)
+        
+
+
         
 
 
@@ -257,11 +262,35 @@ if __name__ == "__main__":
             doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
             sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
             rows = sheet.get_all_records() #> <class 'list'>
-            
             reading_from_sheet(doc, rows)
 
+
+
         if choice == "3":
+            print("Who would you like get suggestions for?")
+
+            #client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
+            #doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
+            #sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
+            #rows = sheet.get_all_records() #> <class 'list'>
+            #reading_from_sheet(doc, rows)
+
+            choices =[]
+            for row in rows: 
+                dict.append(row)
             
+            print(choices)
+            breakpoint()
+
+
+
+            
+
+
+
+
+
+
             example_subject = "[Daily Briefing] This is a test"
             example_html = f"""
             <h3>This is a test of the Daily Briefing Service</h3>
@@ -406,14 +435,19 @@ Best,
 {name}
 
 
-Dear Chris,
+Dear name,
 
-My name is {name}}; I'm a {year}} at Georgetown's McDonough School of Business studying {major/majors}. 
+My name is {name}}. I'm a {year}} at Georgetown's McDonough School of Business studying {major/majors}. 
 I just wanted to thank you for taking the time to talk to me at {EVENT}}. 
-I enjoyed learning about your experience at {Firm}. I would love to hear more about your experience at Perella. If you have time to talk later in the week so I can ask more about the firm, I would greatly appreciate it.
+I really enjoyed hearing about your experience at {Firm}. I would love to chat over the phone with you to learn more about what your experience has been like. Would you have any availabilty in the coming weeks? 
+
+Please find my resume attached as a guide to my previous work. Thank you in advance!
+Looking forward to hearing from you. 
 
 Best,
-Patrick
+Name
+
+
 
 
 """
