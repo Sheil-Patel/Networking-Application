@@ -24,9 +24,7 @@ format_header = cellFormat(
 )
 
 def print_headers(rows,sheet):
-    if len(rows) >= 1:
-        print("Welcome")
-    else: 
+    if not rows:
         row = ["Company", "First Name", "Last Name" , "Email", "Phone Number", "Where we met?", "Notes", "Date Added", "Date of last Contact", "2nd Most Recent Date of Contact", "Date of Last Push Notification Sent"]
         index = 1
         sheet.insert_row(row,index)
@@ -36,7 +34,34 @@ def print_headers(rows,sheet):
         set_column_width(sheet, 'A:K', 240)
         set_frozen(sheet, rows = 1)
 
-
+def print_personal_headers(rows2,sheet2):
+    if not rows2:
+        print("\nPlease input your personal contact information\n")
+        first_name = input("\nWhat is your first name, as you would like to be known by to recruiters?\n")
+        last_name = input("\nWhat is your last name?\n")
+        university = input("\nWhat University do you go to. Ex. 'Georgetown University' \n")
+        majors = input("\nWhat majors are you currently pursuing. Ex. Finance and Operations and Information Management \n")
+        classYear = input("\nWhat year are you? Ex. Sophomore\n")
+        #Add header
+        row = ["Your First Name", "Your Last Name", "Your Current University", "Your Majors", "Your Class Year"]
+        index = 1
+        sheet2.insert_row(row,index)
+        format_cell_range(sheet2, 'A1:E1', format_header)
+        #gspread_formatting(sheet, 'A1:K1' , format_header)
+        set_row_height(sheet2, '1', 77)
+        set_column_width(sheet2, 'A:E', 240)
+        set_frozen(sheet2, rows = 1)
+        #Add Personal Info
+        next_row = [first_name,last_name,university,majors,classYear]
+        index = 2
+        sheet2.insert_row(next_row,index)
+        format_cell_range(sheet2, 'A1:E1', format_header)
+        set_row_height(sheet2, '1', 77)
+        set_column_width(sheet2, 'A:E', 240)
+        set_frozen(sheet2, rows = 1)
+        
+def update_personal_info():
+    print("hi")
 
 
 
@@ -173,20 +198,8 @@ if __name__ == "__main__":
     sheet2 = doc.worksheet(SHEET_NAME2)
     rows2 = sheet2.get_all_records()
     
-    if not rows2:
-        print("\nPlease input your personal contact information")
-
-    ### if cell in sheet ("Personal information") is blank then prompt for this, if not -
-
-   #     first_nameinput = input("What is your first name, as you would like to be known by to recruiters?")
-   #     last_name = input("What is your last name?")
-   #     university = input("What University do you go to. Ex. 'Georgetown University' ")
-   #     majors = input("What majors are you currently pursuing. Ex. Finance and Operations and Information Management ")
-   #     classYear = input("What year are you? Ex. Sophomore")
-#
-#
-#
-    
+    print_personal_headers(rows2, sheet2)
+        
 
     while True:
         print("\n Hi, this is Donnie Azoff, your Networking Virtual Assistant, how may I help you today?\n")
@@ -230,7 +243,6 @@ if __name__ == "__main__":
 
                 networking_contacts = []
                 networking_contacts.append(contact) # Appends contact to list (dictionary to list)
-                #print(networking_contacts[0]["phone_number"]) # should print phone number
                 info = networking_contacts[0]
                 writing_to_sheet(info,sheet,rows)
 
