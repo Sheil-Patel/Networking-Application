@@ -25,7 +25,7 @@ format_header = cellFormat(
 
 def print_headers(rows,sheet):
     if len(rows) >= 1:
-        print("No Header Printed")
+        print("Welcome")
     else: 
         row = ["Company", "First Name", "Last Name" , "Email", "Phone Number", "Where we met?", "Notes", "Date Added", "Date of last Contact", "2nd Most Recent Date of Contact", "Date of Last Push Notification Sent"]
         index = 1
@@ -150,22 +150,6 @@ if __name__ == "__main__":
     # AUTHORIZATION for google sheets and sendgrid
     #
 
-
-
-### if cell in sheet ("Personal information") is blank then prompt for this, if not -
-
-   #     first_nameinput = input("What is your first name, as you would like to be known by to recruiters?")
-   #     last_name = input("What is your last name?")
-   #     university = input("What University do you go to. Ex. 'Georgetown University' ")
-   #     majors = input("What majors are you currently pursuing. Ex. Finance and Operations and Information Management ")
-   #     classYear = input("What year are you? Ex. Sophomore")
-#
-#
-#
-
-
-
-
     CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "auth", "google_api_credentials.json")
 
     AUTH_SCOPE = [
@@ -181,6 +165,28 @@ if __name__ == "__main__":
     SHEET_NAME = os.environ.get("SHEET_NAME", "Products")
     SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
     MY_EMAIL = os.environ.get("MY_EMAIL_ADDRESS")
+    SHEET_NAME2 = os.environ.get("SHEET_NAME2", "Personal Info")
+
+    #Spreadsheet 2 Refresh
+    client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
+    doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
+    sheet2 = doc.worksheet(SHEET_NAME2)
+    rows2 = sheet2.get_all_records()
+    
+    if not rows2:
+        print("\nPlease input your personal contact information")
+
+    ### if cell in sheet ("Personal information") is blank then prompt for this, if not -
+
+   #     first_nameinput = input("What is your first name, as you would like to be known by to recruiters?")
+   #     last_name = input("What is your last name?")
+   #     university = input("What University do you go to. Ex. 'Georgetown University' ")
+   #     majors = input("What majors are you currently pursuing. Ex. Finance and Operations and Information Management ")
+   #     classYear = input("What year are you? Ex. Sophomore")
+#
+#
+#
+    
 
     while True:
         print("\n Hi, this is Donnie Azoff, your Networking Virtual Assistant, how may I help you today?\n")
@@ -193,7 +199,9 @@ if __name__ == "__main__":
             sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
             rows = sheet.get_all_records() #> <class 'list'>
 
-            print_headers(rows,sheet)
+           
+
+            print_headers(rows,sheet) #Prints headers if there are none
 
             
             
