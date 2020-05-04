@@ -331,6 +331,7 @@ if __name__ == "__main__":
 
     
             suggestions = [ 
+
                 { "name": "Networking Event Follow up", 
                 "Template":  f""" 
                 <p>Dear {contactINFO['First Name']}, </p>
@@ -340,6 +341,7 @@ if __name__ == "__main__":
                 <p>Best, </p>
                 <p>{yourcontactINFO['Your First Name']}</p>
                 """},
+
                 {"name": "Linkedin Cold Call", "Template": f"""
                 <p>Hi {contactINFO['First Name']}, </p>
                <p>My name is {yourcontactINFO['Your First Name']} {yourcontactINFO['Your Last Name']} and I am a {yourcontactINFO['Your Class Year']} at {yourcontactINFO['Your Current University']} studying {yourcontactINFO['Your Majors']}. 
@@ -358,7 +360,25 @@ if __name__ == "__main__":
                 <p> Thanks again and I look forward to staying in touch!</p>
                 <p> Best, </p>
                 <p>{yourcontactINFO['Your First Name']}</p>
-                """ }
+                """ },
+
+                {"name": "Catch Up!", "Template": f"""
+
+                <p> Hi {contactINFO['First Name']}, </p>
+
+                <p> I hope this email finds you well. </p>
+
+                <p> I know we spoke a few weeks ago about *** {contactINFO['notes']} ***. I have continued to learn more about {contactINFO['Company']} since then, and I would love to be able to touch base with you sometime soon.</p>
+                <p> Would you be available to chat over the phone sometime this week? I can make myself available at your earliest convience. </p>. 
+                <p> Thanks again for your continued guidance throughout this process. </p>
+                <p> Looking forward to connecting soon!</p>
+
+                <p> Best, </p>
+                <p>{yourcontactINFO['Your First Name']}</p>
+
+                """}
+
+                
             ]
             print("What template would you like to see?")
 
