@@ -434,8 +434,8 @@ if __name__ == "__main__":
 
             personal_info = [first_name,last_name, your_email, university,majors,classYear]
             
-            x = 5 #Related to columns
-            y = 4 #Related to a list
+            x = 6 #Related to columns
+            y = 5 #Related to a list
             while (x != 0):
                 plug = personal_info[y]
                 sheet2.update_cell(2, x, plug )
