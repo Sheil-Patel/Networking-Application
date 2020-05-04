@@ -41,25 +41,26 @@ def print_personal_headers(rows2,sheet2):
         print("\nPlease input your personal contact information\n")
         first_name = input("\nWhat is your first name, as you would like to be known by to recruiters?\n")
         last_name = input("\nWhat is your last name?\n")
+        your_email = input("\nWhat is your Email Address? - This will be used to send suggestions: ")
         university = input("\nWhat University do you go to. Ex. 'Georgetown University' \n")
         majors = input("\nWhat majors are you currently pursuing. Ex. Finance and Operations and Information Management \n")
         classYear = input("\nWhat year are you? Ex. Sophomore\n")
         #Add header
-        row = ["Your First Name", "Your Last Name", "Your Current University", "Your Majors", "Your Class Year"]
+        row = ["Your First Name", "Your Last Name", "Email", "Your Current University", "Your Majors", "Your Class Year"]
         index = 1
         sheet2.insert_row(row,index)
-        format_cell_range(sheet2, 'A1:E1', format_header)
+        format_cell_range(sheet2, 'A1:F1', format_header)
         #gspread_formatting(sheet, 'A1:K1' , format_header)
         set_row_height(sheet2, '1', 77)
-        set_column_width(sheet2, 'A:E', 240)
+        set_column_width(sheet2, 'A:F', 240)
         set_frozen(sheet2, rows = 1)
         #Add Personal Info
-        next_row = [first_name,last_name,university,majors,classYear]
+        next_row = [first_name,last_name, your_email, university,majors,classYear]
         index = 2
         sheet2.insert_row(next_row,index)
-        format_cell_range(sheet2, 'A1:E1', format_header)
+        format_cell_range(sheet2, 'A1:F1', format_header)
         set_row_height(sheet2, '1', 77)
-        set_column_width(sheet2, 'A:E', 240)
+        set_column_width(sheet2, 'A:F', 240)
         set_frozen(sheet2, rows = 1)
         
 
@@ -330,23 +331,77 @@ if __name__ == "__main__":
             print(suggestions[suggestionNumber]["Template"])
 
 
-            
 
-
-
-            
+            #emailDecision = input("Would you like to receive an email with your suggestions?")
 
 
 
 
-            #choices =[]
-            #for row in rows: 
-            #    choices.append(row)
-            #
-            #print(choices)
-            #print(type(choices))
 
-
+#def send_email(running_total_price): 
+#    """
+#    Takes inputs for decisions on whether to send email or not and to what email
+#    Uses the sendgrid API to send an email
+#    """ 
+#
+#    load_dotenv()
+#
+#    SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY", "OOPS, please set env var called 'SENDGRID_API_KEY'")
+#    MY_ADDRESS = os.environ.get("MY_EMAIL_ADDRESS", "OOPS, please set env var called 'MY_EMAIL_ADDRESS'")
+#
+#
+#    email_decision = False
+#    while email_decision == False:
+#
+#        print(("Would you like to receive an email with your suggestions?")
+#        email_decision = input("Please Enter 'yes' or 'no': ")
+#        if email_decision == 'no' or email_decision == 'NO' or email_decision == 'No' or email_decision == 'n' or email_decision == 'N':
+#            print("Okay! No Email Receipt Will Be Sent")
+#            email_decision = True
+#        elif email_decision == 'yes' or email_decision == 'YES' or email_decision == 'Yes' or email_decision == 'y' or email_decision == 'Y':
+#            email_decision = True
+#
+#            print("----------------------------------------------------------------------")
+#            emailed = input("Please enter your email address receipt: ")
+#            print("                 ")
+#            while '@' not in emailed:
+#                print("Invalid Email Detected")
+#                emailed = input("Please enter your email address: ")
+#            client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
+#            print("CLIENT:", type(client))
+#
+#            subject = "Your Receipt from Clean Eats Grocery Store"
+#
+#
+#
+#
+#
+#            html_content = "Thank You For Shopping at Clean Eats Grocery Store! Your Total is: " + get_total_due(running_total_price) + "       " + " Thank you. Come again!"
+#            message = Mail(from_email=MY_ADDRESS, to_emails=emailed, subject=subject, html_content=html_content)
+#
+#
+#
+#            try:
+#                response = client.send(message)
+#
+#                print("RESPONSE:", type(response)) #> <class 'python_http_client.client.Response'>
+#                print(response.status_code) #> 202 indicates SUCCESS
+#                print(response.body)
+#                print(response.headers)
+#
+#            except Exception as e:
+#              print("OOPS", e.message)
+#
+#
+#            if str(response.status_code) == "202":
+#                    print("Email sent successfully!")
+#            else:
+#                    print("Oh, something went wrong with sending the email.")
+#                    print(response.status_code)
+#                    print(response.body)
+#        else:
+#            email_decision = False
+#
 
 
             
