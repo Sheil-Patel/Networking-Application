@@ -300,6 +300,7 @@ if __name__ == "__main__":
             suggestions = [ 
                 { "name": "Networking Event Follow up", 
                 "Template":  f""" 
+
                 Dear {contactINFO['First Name']},\n
 
                 I hope this email finds you well. 
@@ -308,16 +309,30 @@ if __name__ == "__main__":
                 Would you have any availability to chat over the phone sometime this week? I have attached my resume as a guide to some of my previous work. Thank you in advance and I hope to talk to you soon! 
                 
                 Best,
-                {yourcontactINFO['Your First Name']}""" }
+                {yourcontactINFO['Your First Name']}
+
+                """ }
             
 
             ]
 
             print("What template would you like to see?")
 
+            y = 1
             for suggest in suggestions: 
-                print(suggest['name'])
+                print(f"Suggestion {y}: {suggest['name']} ")
                 print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
+                y += 1
+
+            suggestionNumber = int(input("Please Enter The Corresponding Number To See The Suggestion: ")) - 1
+            print("Please Find the Requested Suggestion Below: ")
+            print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
+            print(suggestions[suggestionNumber]["Template"])
+
+
+            
+
+
 
             
 
