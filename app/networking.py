@@ -1,4 +1,5 @@
 #Networking-Application/networking.py
+#COPY PASTED SO SHOULD WORK
 
 import os
 from dotenv import load_dotenv
@@ -246,19 +247,14 @@ def suggestions_func(contactINFO,yourcontactINFO,opportunities):
                 """ },
 
                 {"name": "Catch Up!", "Template": f"""
-
                 <p> Hi {contactINFO['First Name']}, </p>
-
                 <p> I hope this email finds you well. </p>
-
                 <p> I know we spoke a few weeks ago about *** {contactINFO.get('notes')} ***. I have continued to learn more about {contactINFO['Company']} since then, and I would love to be able to touch base with you sometime soon.</p>
                 <p> Would you be available to chat over the phone sometime this week? I can make myself available at your earliest convience. </p>. 
                 <p> Thanks again for your continued guidance throughout this process. </p>
                 <p> Looking forward to connecting soon!</p>
-
                 <p> Best, </p>
                 <p>{yourcontactINFO['Your First Name']}</p>
-
                 """}
 
                 
@@ -424,24 +420,16 @@ if __name__ == "__main__":
 
 
             html = f"""
-
             <img src="https://i0.wp.com/arielle.com.au/wp-content/uploads/2016/04/urban-nyc-light.jpg">
-
             
             <h3> Hi, {yourcontactINFO['Your First Name']}! </h3>
             <h4> Here is Your Requested Suggesstion for {contactINFO['First Name']} {contactINFO['Last Name']} at {contactINFO['Company']} </h4>
-
             
             
-
             {suggestions[suggestionNumber]['Template']}
-
-
             <h4> Feel Free to Copy and Paste this Draft to send to {contactINFO['First Name']} at {contactINFO['Email']} </h4>
             
             <h4> Dont Forget To Proof Read and Attach a Resume! </h4>
-
-
             """
             
             send_email(subject, html, yourcontactINFO)
@@ -526,38 +514,19 @@ if __name__ == "__main__":
   
 """
 Dear name:
-
 I hope this email finds you well!
-
 My name is (me); I'm a {year}} at Georgetown's McDonough School of Business studying {major/majors}. {reccommender}} recommended that I reach out to you to learn a bit more about {firm"}.
-
 If you have some time, I would love to chat and gain your perspective on your group and the firm overall. Would you have any availability in the coming weeks?
-
 I've also attached my resume below, should it be of use!
-
 Thank you for your time, I look forward to hearing from you!
-
 Best,
-
 {name}
-
-
 Dear name,
-
 My name is {name}}. I'm a {year}} at Georgetown's McDonough School of Business studying {major/majors}. 
 I just wanted to thank you for taking the time to talk to me at {EVENT}}. 
 I really enjoyed hearing about your experience at {Firm}. I would love to chat over the phone with you to learn more about what your experience has been like. Would you have any availabilty in the coming weeks? 
-
 Please find my resume attached as a guide to my previous work. Thank you in advance!
 Looking forward to hearing from you. 
-
 Best,
 Name
-
-
-
-
 """
-
-
-
