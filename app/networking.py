@@ -15,7 +15,7 @@ from gspread_formatting import *
 
 
 ### Formatting Definitions - use any of these for the last parameter in the 'format_cell_range() function' 
-# detailed notes found here: https://pypi.org/project/gspread-formatting/    https://stackoverflow.com/questions/54179490/gspread-how-to-change-the-color-of-an-entire-row
+# detailed notes found here:     https://stackoverflow.com/questions/54179490/gspread-how-to-change-the-color-of-an-entire-row
 
 format_header = cellFormat(
     backgroundColor = color(204, 204, 204),
@@ -60,9 +60,6 @@ def print_personal_headers(rows2,sheet2):
         set_column_width(sheet2, 'A:E', 240)
         set_frozen(sheet2, rows = 1)
         
-def update_personal_info():
-    print("hi")
-
 
 
 
@@ -198,12 +195,11 @@ if __name__ == "__main__":
     sheet2 = doc.worksheet(SHEET_NAME2)
     rows2 = sheet2.get_all_records()
     
-    print_personal_headers(rows2, sheet2)
-        
+    print_personal_headers(rows2, sheet2) 
 
     while True:
         print("\n Hi, this is Donnie Azoff, your Networking Virtual Assistant, how may I help you today?\n")
-        choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to edit basic information, Enter 5 to Quit \n")
+        choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to edit basic information, Enter 5 to update your personal information, Enter 6 to Quit \n")
         
         if choice == "1":
 
@@ -322,10 +318,33 @@ if __name__ == "__main__":
 
 
 
-
+        if choice == "5":
+            #Spreadsheet 2 Refresh
+            client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
+            doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
+            sheet2 = doc.worksheet(SHEET_NAME2)
+            rows2 = sheet2.get_all_records()
 
             
-        if choice == "5":
+            first_name = input("\nWhat is your first name, as you would like to be known by to recruiters?\n")
+            last_name = input("\nWhat is your last name?\n")
+            university = input("\nWhat University do you go to. Ex. 'Georgetown University' \n")
+            majors = input("\nWhat majors are you currently pursuing. Ex. Finance and Operations and Information Management \n")
+            classYear = input("\nWhat year are you? Ex. Sophomore\n")
+
+            personal_info = [first_name,last_name,university,majors,classYear]
+            
+            x = 5 #Related to columns
+            y = 4 #Related to a list
+            while (x != 0):
+                plug = personal_info[y]
+                sheet2.update_cell(2, x, plug )
+                x -= 1
+                y -= 1
+
+            
+            
+        if choice == "6":
             print("Quitting...")
             break
 
