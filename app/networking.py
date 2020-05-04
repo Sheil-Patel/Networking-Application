@@ -368,7 +368,7 @@ if __name__ == "__main__":
 
                 <p> I hope this email finds you well. </p>
 
-                <p> I know we spoke a few weeks ago about *** {contactINFO['notes']} ***. I have continued to learn more about {contactINFO['Company']} since then, and I would love to be able to touch base with you sometime soon.</p>
+                <p> I know we spoke a few weeks ago about *** {contactINFO['Notes']} ***. I have continued to learn more about {contactINFO['Company']} since then, and I would love to be able to touch base with you sometime soon.</p>
                 <p> Would you be available to chat over the phone sometime this week? I can make myself available at your earliest convience. </p>. 
                 <p> Thanks again for your continued guidance throughout this process. </p>
                 <p> Looking forward to connecting soon!</p>
@@ -376,9 +376,9 @@ if __name__ == "__main__":
                 <p> Best, </p>
                 <p>{yourcontactINFO['Your First Name']}</p>
 
-                """}
+                """},
 
-                
+
             ]
             print("What template would you like to see?")
 
