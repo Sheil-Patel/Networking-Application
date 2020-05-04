@@ -359,6 +359,21 @@ if __name__ == "__main__":
                 <p>{yourcontactINFO['Your First Name']}</p>
                 
                 """ },
+                {"name": "Coffee Chat Follow Up", 
+                "Template": f"""
+
+                <p>Hi {contactINFO['First Name']}, </p>
+
+                <p> I just wanted to follow up after our coffee chat. Thanks a lot for taking the time today; I really enjoyed hearing about {opportunities}! </p>
+                <p> I would love to learn a little more about {contactINFO['Company']}. Would you be able to connect me with an anyone else at the firm to hear about his or her experience? </p>
+                <p> Thanks again and I look forward to staying in touch!</p>
+
+                <p> Best, </p>
+                <p>{yourcontactINFO['Your First Name']}</p>
+
+                
+
+                """
             
 
             ]
@@ -374,9 +389,17 @@ if __name__ == "__main__":
 
 
             suggestionNumber = int(input("Please Enter The Corresponding Number To See The Suggestion: ")) - 1
-            print("Please Find the Requested Suggestion Below: ")
-            print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
-            print(suggestions[suggestionNumber]["Template"])
+            if suggestionNumber == 2:
+                print("You selected Coffee Chat Template")
+                print("Help us fill out this template for you by providing us with a bit of information!")
+                opportunities = input("Please complete the following, 'I really enjoyed hearing about (.......)")
+                print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
+                print("Please Find the Requested Suggestion Below: ")
+                print(suggestions[suggestionNumber]["Template"])
+            else: 
+                print("Please Find the Requested Suggestion Below: ")
+                print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
+                print(suggestions[suggestionNumber]["Template"])
 
 
             
@@ -397,35 +420,14 @@ if __name__ == "__main__":
 
             {suggestions[suggestionNumber]['Template']}
 
+
             <h4> Feel Free to Copy and Paste this Draft to send to {contactINFO['First Name']} at {contactINFO['Email']} </h4>
             
             <h4> Dont Forget To Proof Read and Attach a Resume! </h4>
 
 
             """
-            #
-            #f"""
-            #<p>This is a test of the Daily Briefing Service</p>
-#
-            #<h4>Today's Date</h4>
-            #<p>Monday, January 1, 2040</p>
-#
-            #<h4>My Stocks</h4>
-            #<ul>
-            #    <li>MSFT | +04%</li>
-            #    <li>WORK | +20%</li>
-            #    <li>ZM | +44%</li>
-            #</ul>
-#
-            #<h4>My Forecast</h4>
-            #<ul>
-            #    <li>10:00 AM | 65 DEGREES | CLEAR SKIES</li>
-            #    <li>01:00 PM | 70 DEGREES | CLEAR SKIES</li>
-            #    <li>04:00 PM | 75 DEGREES | CLEAR SKIES</li>
-            #    <li>07:00 PM | 67 DEGREES | PARTLY CLOUDY</li>
-            #    <li>10:00 PM | 56 DEGREES | CLEAR SKIES</li>
-            #</ul>
-            #"""
+            
             send_email(subject, html, yourcontactINFO)
         
             break
