@@ -194,108 +194,10 @@ def send_email(subject, html, yourcontactINFO):
                 print("OOPS", e.message)
                 return None
            
-def get_suggestion(rows):
-    print("Who would you like get suggestions for?")
-
-    x = 1
-    for row in rows:
-        print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
-        print(f"{x} :  {row}")
-        x += 1
-        print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
-            
-    suggestion_for = int(input("Please Enter The Number of the Corresponding Contact:  ")) - 1
-    print(f"You Have Chosen the Following Contact:  {rows[suggestion_for]}")
-    print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
-    print("Please See Suggestion Options: ")
-    contactINFO = rows[suggestion_for]
-    return contactINFO
 
 
-def suggestions_func(contactINFO,yourcontactINFO,opportunities):
-    suggestions = [ 
 
-                { "name": "Networking Event Follow up", 
-                "Template":  f""" 
-                <p>Dear {contactINFO['First Name']}, </p>
-                <p>I hope this email finds you well. </p>
-                <p>I just wanted to reach out and thank you for taking the time to talk to me at the {contactINFO['Where we met?']}. I am really interested in continuing to learn more about {contactINFO['Company']} and would love to hear more about your experiences so far. 
-                Would you have any availability to chat over the phone sometime this week? I have attached my resume as a guide to some of my previous work. Thank you in advance and I hope to talk to you soon! </p>
-                <p>Best, </p>
-                <p>{yourcontactINFO['Your First Name']}</p>
-                """},
 
-                {"name": "Linkedin Cold Call", "Template": f"""
-                <p>Hi {contactINFO['First Name']}, </p>
-               <p>My name is {yourcontactINFO['Your First Name']} {yourcontactINFO['Your Last Name']} and I am a {yourcontactINFO['Your Class Year']} at {yourcontactINFO['Your Current University']} studying {yourcontactINFO['Your Majors']}. 
-                I found your contact information on Linkedin. </p>
-                <p>I am currently going through the undergraduate recruiting process for {contactINFO['Company']} and I am very interested in continuing to learn more. </p>
-                <p>I would love to speak on the phone over your experience at {contactINFO['Company']} if you have any time this week or next week. Please let me know if this would be possible. Looking forward to hearing from you. 
-                Please find my resume attached as a guide to my previous work experience. </p>
-                <p>Best regards, </p>
-                <p>{yourcontactINFO['Your First Name']}</p>
-                """ },
-                {"name": "Coffee Chat Follow Up", 
-                "Template": f"""
-                <p>Hi {contactINFO['First Name']}, </p>
-                <p> I just wanted to follow up after our coffee chat. Thanks a lot for taking the time today; I really enjoyed hearing about {opportunities}! </p>
-                <p> I would love to learn a little more about {contactINFO['Company']}. Would you be able to connect me with an anyone else at the firm to hear about his or her experience? </p>
-                <p> Thanks again and I look forward to staying in touch!</p>
-                <p> Best, </p>
-                <p>{yourcontactINFO['Your First Name']}</p>
-                """ },
-
-                {"name": "Catch Up!", "Template": f"""
-
-                <p> Hi {contactINFO['First Name']}, </p>
-
-                <p> I hope this email finds you well. </p>
-
-                <p> I know we spoke a few weeks ago about *** {contactINFO.get('notes')} ***. I have continued to learn more about {contactINFO['Company']} since then, and I would love to be able to touch base with you sometime soon.</p>
-                <p> Would you be available to chat over the phone sometime this week? I can make myself available at your earliest convience. </p>. 
-                <p> Thanks again for your continued guidance throughout this process. </p>
-                <p> Looking forward to connecting soon!</p>
-
-                <p> Best, </p>
-                <p>{yourcontactINFO['Your First Name']}</p>
-
-                """}
-
-                
-            ]
-
-    return suggestions
-
-def display_templates(suggestions, contactINFO, opportunities):
-    print("What template would you like to see?")
-    y = 1
-    for suggest in suggestions: 
-        print(f"Suggestion {y}: {suggest['name']} ")
-        print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
-        y += 1
-    
-    suggestionNumber = int(input("Please Enter The Corresponding Number To See The Suggestion: ")) - 1
-    if suggestionNumber == 2:
-        print("You selected Coffee Chat Template")
-        print("Help us fill out this template for you by providing us with a bit of information!")
-        oppLIST = input("Please complete the following, 'I really enjoyed hearing about (.......)")
-        opportunities = oppLIST
-        print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
-        print("Please Find the Requested Suggestion Below: ")
-        suggestions[2].update( {"Template": f"""
-        <p>Hi {contactINFO['First Name']}, </p>
-        <p> I just wanted to follow up after our coffee chat. Thanks a lot for taking the time today; I really enjoyed hearing about {opportunities}! </p>
-        <p> I would love to learn a little more about {contactINFO['Company']}. Would you be able to connect me with an anyone else at the firm to hear about his or her experience? </p>
-        <p> Thanks again and I look forward to staying in touch!</p>
-        <p> Best, </p>
-        <p>{yourcontactINFO['Your First Name']}</p>
-        """  } )
-        print(suggestions[suggestionNumber]["Template"])
-    else: 
-        print("Please Find the Requested Suggestion Below: ")
-        print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
-        print(suggestions[suggestionNumber]["Template"])
-    return suggestionNumber
 
 
 if __name__ == "__main__":
@@ -404,14 +306,63 @@ if __name__ == "__main__":
             doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
             sheet2 = doc.worksheet(SHEET_NAME2)
             rows2 = sheet2.get_all_records()      
+            yourcontactINFO = rows2[0]      
 
-            yourcontactINFO = rows2[0]   #Gets your contact info
-            contactINFO = get_suggestion(rows) #Gets your suggestion contact info
+
+
+            print("Who would you like get suggestions for?")
+
+            x = 1
+            for row in rows:
+                print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
+                print(f"{x} :  {row}")
+                x += 1
+                print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
+            
+            suggestion_for = int(input("Please Enter The Number of the Corresponding Contact:  ")) - 1
+            print(f"You Have Chosen the Following Contact:  {rows[suggestion_for]}")
+            print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
+            print("Please See Suggestion Options: ")
+
+            contactINFO = rows[suggestion_for]
+
+            ## have to initialize variables in the template and then update them
             opportunities = ""
 
     
-            suggestions = suggestions_func(contactINFO,yourcontactINFO,opportunities) #This function stores the templates
+            suggestions = [ 
 
+                { "name": "Networking Event Follow up", 
+                "Template":  f""" 
+                <p>Dear {contactINFO['First Name']}, </p>
+                <p>I hope this email finds you well. </p>
+                <p>I just wanted to reach out and thank you for taking the time to talk to me at the {contactINFO['Where we met?']}. I am really interested in continuing to learn more about {contactINFO['Company']} and would love to hear more about your experiences so far. 
+                Would you have any availability to chat over the phone sometime this week? I have attached my resume as a guide to some of my previous work. Thank you in advance and I hope to talk to you soon! </p>
+                <p>Best, </p>
+                <p>{yourcontactINFO['Your First Name']}</p>
+                """},
+
+                {"name": "Linkedin Cold Call", "Template": f"""
+                <p>Hi {contactINFO['First Name']}, </p>
+               <p>My name is {yourcontactINFO['Your First Name']} {yourcontactINFO['Your Last Name']} and I am a {yourcontactINFO['Your Class Year']} at {yourcontactINFO['Your Current University']} studying {yourcontactINFO['Your Majors']}. 
+                I found your contact information on Linkedin. </p>
+                <p>I am currently going through the undergraduate recruiting process for {contactINFO['Company']} and I am very interested in continuing to learn more. </p>
+                <p>I would love to speak on the phone over your experience at {contactINFO['Company']} if you have any time this week or next week. Please let me know if this would be possible. Looking forward to hearing from you. 
+                Please find my resume attached as a guide to my previous work experience. </p>
+                <p>Best regards, </p>
+                <p>{yourcontactINFO['Your First Name']}</p>
+                """ },
+                {"name": "Coffee Chat Follow Up", 
+                "Template": f"""
+                <p>Hi {contactINFO['First Name']}, </p>
+                <p> I just wanted to follow up after our coffee chat. Thanks a lot for taking the time today; I really enjoyed hearing about {opportunities}! </p>
+                <p> I would love to learn a little more about {contactINFO['Company']}. Would you be able to connect me with an anyone else at the firm to hear about his or her experience? </p>
+                <p> Thanks again and I look forward to staying in touch!</p>
+                <p> Best, </p>
+                <p>{yourcontactINFO['Your First Name']}</p>
+                """ },
+
+                {"name": "Catch Up!", "Template": f"""
 
                 <p> Hi {contactINFO['First Name']}, </p>
 
@@ -462,9 +413,6 @@ if __name__ == "__main__":
                 print("Please Find the Requested Suggestion Below: ")
                 print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
                 print(suggestions[suggestionNumber]["Template"])
-                
-            suggestionNumber = display_templates(suggestions, contactINFO, opportunities) #Outputs email suggestions and asks if you want a template sent to your email
-   
 
 
             
@@ -495,6 +443,7 @@ if __name__ == "__main__":
             
             send_email(subject, html, yourcontactINFO)
         
+            break
 
 
 
@@ -519,8 +468,8 @@ if __name__ == "__main__":
 
             personal_info = [first_name,last_name, your_email, university,majors,classYear]
             
-            x = 6 #Related to columns
-            y = 5 #Related to a list
+            x = 5 #Related to columns
+            y = 4 #Related to a list
             while (x != 0):
                 plug = personal_info[y]
                 sheet2.update_cell(2, x, plug )
@@ -607,6 +556,7 @@ Name
 
 
 """
+
 
 
 
