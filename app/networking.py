@@ -204,7 +204,7 @@ if __name__ == "__main__":
 
     while True:
         print("\n Hi, this is Donnie Azoff, your Networking Virtual Assistant, how may I help you today?\n")
-        choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to edit basic information, Enter 5 to update your personal information, Enter 6 to Quit \n")
+        choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to update your personal information, Enter 5 to Quit \n")
         
         if choice == "1":
 
@@ -267,20 +267,70 @@ if __name__ == "__main__":
 
 
         if choice == "3":
+            
+
+            client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
+            doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
+            sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
+            rows = sheet.get_all_records() #> <class 'list'>
+
+            client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
+            doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
+            sheet2 = doc.worksheet(SHEET_NAME2)
+            rows2 = sheet2.get_all_records()      
+            yourcontactINFO = rows2[0]      
+
+
             print("Who would you like get suggestions for?")
 
-            #client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
-            #doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
-            #sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
-            #rows = sheet.get_all_records() #> <class 'list'>
-            #reading_from_sheet(doc, rows)
-
-            choices =[]
-            for row in rows: 
-                dict.append(row)
+            x = 1
+            for row in rows:
+                print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
+                print(f"{x} :  {row}")
+                x += 1
+                print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
             
-            print(choices)
-            breakpoint()
+            suggestion_for = int(input("Please Enter The Number of the Corresponding Contact:  ")) - 1
+            print(f"You Have Chosen the Following Contact:  {rows[suggestion_for]}")
+            print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
+            print("Please See Suggestion Options: ")
+
+            contactINFO = rows[suggestion_for]
+
+            suggestions = [ 
+                { "name": "Networking Event Follow up", 
+                "Template":  f""" 
+                Dear {contactINFO['First Name']},\n
+
+                I hope this email finds you well. 
+
+                I just wanted to reach out and thank you for taking the time to talk to me at the {contactINFO['Where we met?']}. I am really interested in continuing to learn more about the {contactINFO['Company']} and would love to hear more about your experiences so far. 
+                Would you have any availability to chat over the phone sometime this week? I have attached my resume as a guide to some of my previous work. Thank you in advance and I hope to talk to you soon! 
+                
+                Best,
+                {yourcontactINFO['Your First Name']}""" }
+            
+
+            ]
+
+            print("What template would you like to see?")
+
+            for suggest in suggestions: 
+                print(suggest['name'])
+                print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
+
+            
+
+
+
+
+            #choices =[]
+            #for row in rows: 
+            #    choices.append(row)
+            #
+            #print(choices)
+            #print(type(choices))
+
 
 
 
@@ -291,63 +341,38 @@ if __name__ == "__main__":
 
 
 
-            example_subject = "[Daily Briefing] This is a test"
-            example_html = f"""
-            <h3>This is a test of the Daily Briefing Service</h3>
-
-            <h4>Today's Date</h4>
-            <p>Monday, January 1, 2040</p>
-
-            <h4>My Stocks</h4>
-            <ul>
-                <li>MSFT | +04%</li>
-                <li>WORK | +20%</li>
-                <li>ZM | +44%</li>
-            </ul>
-
-            <h4>My Forecast</h4>
-            <ul>
-                <li>10:00 AM | 65 DEGREES | CLEAR SKIES</li>
-                <li>01:00 PM | 70 DEGREES | CLEAR SKIES</li>
-                <li>04:00 PM | 75 DEGREES | CLEAR SKIES</li>
-                <li>07:00 PM | 67 DEGREES | PARTLY CLOUDY</li>
-                <li>10:00 PM | 56 DEGREES | CLEAR SKIES</li>
-            </ul>
-            """
-            send_email(example_subject, example_html)
+            #example_subject = "[Daily Briefing] This is a test"
+            #example_html = f"""
+            #<h3>This is a test of the Daily Briefing Service</h3>
+#
+            #<h4>Today's Date</h4>
+            #<p>Monday, January 1, 2040</p>
+#
+            #<h4>My Stocks</h4>
+            #<ul>
+            #    <li>MSFT | +04%</li>
+            #    <li>WORK | +20%</li>
+            #    <li>ZM | +44%</li>
+            #</ul>
+#
+            #<h4>My Forecast</h4>
+            #<ul>
+            #    <li>10:00 AM | 65 DEGREES | CLEAR SKIES</li>
+            #    <li>01:00 PM | 70 DEGREES | CLEAR SKIES</li>
+            #    <li>04:00 PM | 75 DEGREES | CLEAR SKIES</li>
+            #    <li>07:00 PM | 67 DEGREES | PARTLY CLOUDY</li>
+            #    <li>10:00 PM | 56 DEGREES | CLEAR SKIES</li>
+            #</ul>
+            #"""
+            #send_email(example_subject, example_html)
         
             break
 
-        if choice == "4": 
-            print("Here's the basic information we have for you!:")
-            print(f"First Name: {first_name}")
-            print(f"Last Name: {last_name}")
-            print(f"Place of Study: {university}")
-            print(f"Year: {classYear}")
-            decision = input("Are you sure you want to edit your response? - (y/n)")
-            while decision != "y" or decision != "n":
-                decision = input("Are you sure you want to edit your response? - (y/n)")
-            if decision  == "n":
-                print("Okay!")
-                break
-            if decision == "y":
-                first_nameinput = input("What is your first name, as you would like to be known by to recruiters?")
-                last_name = input("What is your last name?")
-                university = input("What University do you go to. Ex. 'Georgetown University' ")
-                majors = input("What majors are you currently pursuing. Ex. Finance and Operations and Information Management ")
-                classYear = input("What year are you? Ex. Sophomore")
-
-                print("Here are your updated responses: ")
-                print("Here's the basic information we have for you!:")
-                print(f"First Name: {first_name}")
-                print(f"Last Name: {last_name}")
-                print(f"Place of Study: {university}")
-                print(f"Year: {classYear}")
+        
 
 
 
-
-        if choice == "5":
+        if choice == "4":
             #Spreadsheet 2 Refresh
             client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
             doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
@@ -373,7 +398,7 @@ if __name__ == "__main__":
 
             
             
-        if choice == "6":
+        if choice == "5":
             print("Quitting...")
             break
 
