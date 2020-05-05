@@ -10,8 +10,8 @@ from networking import suggestions_func
 
 
 format_highlight = cellFormat(
-    backgroundColor = color(204, 204, 204),
-    textFormat =textFormat(bold=True, foregroundColor=color(59, 117, 203)) , 
+    backgroundColor = color(10, 10, 200),
+    textFormat =textFormat(bold=False) , 
     horizontalAlignment = 'RIGHT'
 )
 
