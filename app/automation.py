@@ -5,9 +5,18 @@ from datetime import datetime,timedelta
 #Google Sheets
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from gspread_formatting import *
+from networking import suggestions_func
+
+
+format_highlight = cellFormat(
+    backgroundColor = color(10, 10, 200),
+    textFormat =textFormat(bold=False) , 
+    horizontalAlignment = 'RIGHT'
+)
+
 
 if __name__ == "__main__":
-  
   #Authorization
   CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "auth", "google_api_credentials.json")
 
@@ -29,7 +38,7 @@ if __name__ == "__main__":
   doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
   sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
   rows = sheet.get_all_records() #> <class 'list'>
-
+  
   last_notification_info = []
   last_notification = sheet.col_values(11)
   remove = last_notification.pop(0) #removes header
@@ -62,3 +71,5 @@ if __name__ == "__main__":
       sheet.update_cell(row_num, 10, plug ) # Updates Date of Last Contact -> Second most recent date of contact
       sheet.update_cell(row_num, 9, date_str)# Updates Date of last push notifaction(Current Date)-> Date of Last Contacted
       sheet.update_cell(row_num, 11, date_str) # Updates date of last push notification --> Current Date
+      Location = 'I' + str(row_num)
+      format_cell_range(sheet, Location , format_highlight)

@@ -22,8 +22,8 @@ from pprint import pprint
 # detailed notes found here:     https://stackoverflow.com/questions/54179490/gspread-how-to-change-the-color-of-an-entire-row
 
 format_header = cellFormat(
-    backgroundColor = color(204, 204, 204),
-    textFormat =textFormat(bold=True, foregroundColor=color(59, 117, 203)) , 
+    backgroundColor = color(100, 100, 100),
+    textFormat =textFormat(bold=True, foregroundColor=color(220, 200, 300)) , 
     horizontalAlignment = 'CENTER'
 )
 
