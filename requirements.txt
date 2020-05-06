@@ -9,3 +9,5 @@ gspread_formatting
 
 parsel
 selenium
+
+tabulate

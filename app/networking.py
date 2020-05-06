@@ -22,7 +22,9 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 
-def link(): 
+import tabulate
+
+def link(contactINFO): 
     #writer = csv.writer(open('testing.csv', 'w')) # preparing csv file to store parsing result later
     #writer.writerow(['name', 'job_title', 'schools', 'location', 'ln_url'])
 
@@ -58,7 +60,7 @@ def link():
     search_input = driver.find_element_by_name('q')
     # let google find any linkedin user with keyword "python developer" and "San Francisco"
     #{contactINFO['Company']}
-    search_input.send_keys(f'site:linkedin.com/in OR site:linkedin.com/pub -pub.dir AND "Bank of America" ')
+    search_input.send_keys(f"site:linkedin.com/in OR site:linkedin.com/pub -pub.dir AND '{contactINFO['Company']}' ")
 
     search_input.send_keys(Keys.RETURN)
 
@@ -431,7 +433,8 @@ if __name__ == "__main__":
 
     while True:
         print("\n Hi, this is Donnie Azoff, your Networking Virtual Assistant, how may I help you today?\n")
-        choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to update your personal information, Enter 5 to Quit \n")
+        choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to update your personal information, Enter 5 to Quit   \n")
+        
         
         if choice == "1":
 
@@ -516,16 +519,30 @@ if __name__ == "__main__":
 
         
             suggestionNumber = display_templates(suggestions, contactINFO, opportunities) #Outputs email suggestions and asks if you want a template sent to your email
-   
+
+            
+            
             linkedin = True
             while linkedin == True:
-                reportdecision = input(f"Do You Want to Attach a Linkedin Report of People that Work at {contactINFO['Company']} (y/n)")
+                reportdecision = input(f"Do You Want to Attach a Linkedin Report of People that Work at {contactINFO['Company']} (y/n): ")
                 if reportdecision == "y" or reportdecision == "Y" or reportdecision == "yes" or reportdecision == "YES" or reportdecision == "Yes":
                     print("The Browser Will Open and Gather Your Report")
                     time.sleep(1)
                     print("Please wait...")
                     time.sleep(3)
-                    printablelinkedin = link()
+
+                    data = link(contactINFO)
+                    #header = data[0].keys()
+                    header = ""
+                    rows = [x.values() for x in data]
+                    printablelinkedin = tabulate.tabulate(rows, header)
+                
+
+
+
+
+
+
                     header = (f"<h4> We Found Some Contacts for you that work at {contactINFO['Company']} </h4>")
                     linkedin = False
                 elif reportdecision == "n" or reportdecision == "N" or reportdecision == "no" or reportdecision == "NO" or reportdecision == "No":
@@ -636,24 +653,3 @@ if __name__ == "__main__":
     #TODO:  
     #TODO:  
     #TODO:  
-
-
-  
-"""
-Dear name:
-I hope this email finds you well!
-My name is (me); I'm a {year}} at Georgetown's McDonough School of Business studying {major/majors}. {reccommender}} recommended that I reach out to you to learn a bit more about {firm"}.
-If you have some time, I would love to chat and gain your perspective on your group and the firm overall. Would you have any availability in the coming weeks?
-I've also attached my resume below, should it be of use!
-Thank you for your time, I look forward to hearing from you!
-Best,
-{name}
-Dear name,
-My name is {name}}. I'm a {year}} at Georgetown's McDonough School of Business studying {major/majors}. 
-I just wanted to thank you for taking the time to talk to me at {EVENT}}. 
-I really enjoyed hearing about your experience at {Firm}. I would love to chat over the phone with you to learn more about what your experience has been like. Would you have any availabilty in the coming weeks? 
-Please find my resume attached as a guide to my previous work. Thank you in advance!
-Looking forward to hearing from you. 
-Best,
-Name
-"""
