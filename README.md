@@ -85,8 +85,8 @@ SHEET_NAME = Data
 SHEET_NAME2 = Personal Info
 ```
 
-## Linkedin Scraping Instructions
-Azoff lets you scrape linkedin in order to help you find people at the same firm as your contact book! 
+## LinkedIn Scraping Instructions
+Azoff lets you scrape linkedIn in order to help you find people at the same firm as your contact book! 
 
 In order to set this up you will need to install chromedriver onto your computer. 
 
