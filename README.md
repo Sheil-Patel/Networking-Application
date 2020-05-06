@@ -129,16 +129,19 @@ https://github.com/prof-rossetti/intro-to-python/blob/master/notes/clis/heroku.m
 ```
 Once you have created an application on Heroku, you must do the following steps. If are having trouble, reference the link above:
 
-1. Remove the following line from the .gitignore file from your root directory
+1. From your Heroku dashboard, make sure that your application is open and click add-ons. From there you will want to search Heroku Scheduler and install
+
+2. Remove the following line from the .gitignore file from your root directory
 ```sh
 auth/google_api_credentials.json
 ```
-2. Push your code to Heroku using
+3. Push your code to Heroku using
 ```sh
 git push heroku master
 ```
-3. When you are in your application on the Heroku website,go to the "settings" tab and add all your environment variables from your .env folder
-4. Go to "Applications" and enable the Heroku Scheduler to run the code below once daily
+4. When you are in your application on the Heroku website,go to the "settings" tab and add all your environment variables from your .env folder
+
+5. Go to "Applications" and enable the Heroku Scheduler to run the code below once daily
 
 ```sh
 python app/automation.py
