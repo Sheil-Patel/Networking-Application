@@ -6,6 +6,7 @@ from datetime import datetime,timedelta
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from gspread_formatting import *
+#From Networking
 from networking import suggestions_func, get_yourContactINFO
 #Sendgrid
 from sendgrid import SendGridAPIClient
