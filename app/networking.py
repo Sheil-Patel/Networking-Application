@@ -41,21 +41,22 @@ def link(contactINFO):
     driver.find_element_by_xpath('//a[text()="Sign in"]').click()
     
     load_dotenv()
-    USERNAME = os.environ.get("PASSWORD")
-    PASSWORD = os.environ.get("USERNAME")
-
-   
+    PASSWORD = os.environ.get("PASSWORD")
+    USERNAME = os.environ.get("USERNAME1")
+    print(USERNAME)
+    
 
     time.sleep(1)
 
 
     username_input = driver.find_element_by_name('session_key')
-    #username_input.send_keys(USERNAME)
-    username_input.send_keys("sheilprempatel@gmail.com")
+    username_input.send_keys(USERNAME)
+    #username_input.send_keys("sheilprempatel@gmail.com")
 
     password_input = driver.find_element_by_name('session_password')
-    #password_input.send_keys(pass_name)
-    password_input.send_keys("Soccerlinkedin2018!")
+    password_input.send_keys(PASSWORD)
+    #password_input.send_keys("Soccerlinkedin2018!")
+
 
     # click on the sign in button
     # we're finding Sign in text button as it seems this element is seldom to be changed
@@ -77,6 +78,7 @@ def link(contactINFO):
 
     linkcontacts = []
     # visit each profile in linkedin and grab detail we want to get
+    breakpoint()
     for profile in profiles:
         driver.get(profile)
 
@@ -176,10 +178,6 @@ def print_personal_headers(rows2,sheet2):
         set_column_width(sheet2, 'A:F', 240)
         set_frozen(sheet2, rows = 1)
         
-
-
-        
-
 
 
 def get_company():
