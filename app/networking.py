@@ -1,7 +1,4 @@
 #Networking-Application/networking.py
-#COPY PASTED SO SHOULD WORK
-
-# SHOULD BE GOOD NOW#making sure the copies are the same
 
 import os
 from dotenv import load_dotenv
@@ -25,6 +22,13 @@ import time
 import tabulate
 
 def link(contactINFO): 
+
+    """
+    Opens chrome and signs into linkedIn using credentials from .env file
+    Searches public linkedIn files associated with company of the selected contacted
+    Stores the results of the first page of Google into a list of dictionaries 
+    Returns that list 
+    """
     #writer = csv.writer(open('testing.csv', 'w')) # preparing csv file to store parsing result later
     #writer.writerow(['name', 'job_title', 'schools', 'location', 'ln_url'])
 
@@ -61,6 +65,7 @@ def link(contactINFO):
     # let google find any linkedin user with keyword "python developer" and "San Francisco"
     #{contactINFO['Company']}
     search_input.send_keys(f"site:linkedin.com/in OR site:linkedin.com/pub -pub.dir AND '{contactINFO['Company']}' ")
+    #search_input.send_keys(f"site:linkedin.com/in AND '{contactINFO['Company']}' ")
 
     search_input.send_keys(Keys.RETURN)
 
@@ -116,20 +121,18 @@ def link(contactINFO):
     #    print("----------------------------------------------------------------------------")
     return linkcontacts
 
-
-
-##okay all set!! 
-## Bet all good - Sheil
 ### Formatting Definitions - use any of these for the last parameter in the 'format_cell_range() function' 
 # detailed notes found here:     https://stackoverflow.com/questions/54179490/gspread-how-to-change-the-color-of-an-entire-row
-
 format_header = cellFormat(
-    backgroundColor = color(100, 100, 100),
-    textFormat =textFormat(bold=True, foregroundColor=color(220, 200, 300)) , 
+    backgroundColor = color(204, 204, 204),
+    textFormat =textFormat(bold=True, foregroundColor=color(59, 117, 203)) , 
     horizontalAlignment = 'CENTER'
 )
 
 def print_headers(rows,sheet):
+    """
+    Prints headers if none are present and formats them
+    """
     if not rows:
         row = ["Company", "First Name", "Last Name" , "Email", "Phone Number", "Where we met?", "Notes", "Date Added", "Date of last Contact", "2nd Most Recent Date of Contact", "Date of Last Push Notification Sent"]
         index = 1
@@ -142,6 +145,9 @@ def print_headers(rows,sheet):
 
 
 def print_personal_headers(rows2,sheet2):
+    """
+    Prints headers and calls for personal information if nothing is present in the google sheets
+    """
     if not rows2:
         print("\nPlease input your personal contact information\n")
         first_name = input("\nWhat is your first name, as you would like to be known by to recruiters?\n")
@@ -175,6 +181,9 @@ def print_personal_headers(rows2,sheet2):
 
 
 def get_company():
+    """
+    Gets company for contact entered
+    """
     company = input("Please input a company\n")
     while True:
         if company == "":
@@ -183,6 +192,7 @@ def get_company():
             break
     return company
 def get_first_name():
+    """ Gets first Name for contact entered """ 
     while True:
         first_name = input("Please input the first name\n")
         if first_name == "":
@@ -191,6 +201,7 @@ def get_first_name():
             break
     return first_name
 def get_last_name():
+    """ Gets Last Name for contact entered """
     last_name = input("Please input the last name\n")
     while True:
         if last_name == "":
@@ -199,19 +210,24 @@ def get_last_name():
             break
     return last_name
 def get_email():
+    """ Gets email for contact entered """
     email = input("Please input email. For example in form 'example@gmail.com'\n")
     return email
 def get_phone_number():
+    """ Gets Phone Number for contact entered"""
     
     phone_number = input("Please input your phone number\n")
     return phone_number
 def get_where_we_met():
+    """ gets meeting place for contact entered""" 
     where_we_met = input("Where did you meet this contact?\n")
     return where_we_met
 def get_notes():
+    """ gets notes for contact entered"""
     notes = input("Please input any additional notes you had on this contact\n")
     return notes
 def get_date_added():
+    """ gets today's date for date added onto contact book"""
     today = datetime.today()
     d3 = today.strftime("%m/%d/%y")
     return d3
@@ -226,6 +242,7 @@ def get_date_of_last_notification():
     date_of_last_notification = today.strftime("%m/%d/%y")
     return date_of_last_notification
 def create_contact(company, first_name, last_name, email, phone_number,  where_we_met, notes, date_added, date_last_contacted, second_most_recent_date, date_of_last_notification):
+    """ Creates contact based on the inputs """ 
     dictionary = {"company":company,"first_name": first_name , 
     "last_name" : last_name , "email" : email , "phone_number" : phone_number, "where_we_met": where_we_met, 
     "notes": notes, "date_added": date_added, "date_last_contacted" : date_last_contacted, "second_most_recent_date": second_most_recent_date, 
@@ -245,6 +262,8 @@ def reading_from_sheet(doc,rows):
         print(" ")
         x += 1
 def writing_to_sheet(info,sheet,rows):
+
+    """ Writes to the google sheet """ 
     next_id = len(rows) + 1 # TODO: should change this to be one greater than the current maximum id value
     
     next_row = list(info.values())#> [13, 'Product 13', 'snacks', 4.99, '2019-01-01']
@@ -261,6 +280,10 @@ def writing_to_sheet(info,sheet,rows):
     print(type(response)) #> dict
     print(response) #> {'spreadsheetId': '___', 'updatedRange': '___', 'updatedRows': 1, 'updatedColumns': 5, 'updatedCells': 5}
 def send_email(subject, html, yourcontactINFO):
+    """ 
+    Sends email. Passes in subject, html, and contact information from spreadsheet 
+    Important thing to note here is that the email is passed in via the google sheets and thus can be changed whenever
+    """
 
     emailPASS = False
     while emailPASS == False:
@@ -300,6 +323,10 @@ def send_email(subject, html, yourcontactINFO):
                 return None
            
 def get_suggestion(rows):
+    """
+    Shows contact list to prompt for who you would like to see sugesstions for within your contact book 
+    """ 
+
     print("Who would you like get suggestions for?")
 
     x = 1
@@ -318,6 +345,9 @@ def get_suggestion(rows):
 
 
 def suggestions_func(contactINFO,yourcontactINFO,opportunities):
+    """
+    Essentially the database for the templates
+    """
     suggestions = [ 
 
                 { "name": "Networking Event Follow up", 
@@ -367,6 +397,9 @@ def suggestions_func(contactINFO,yourcontactINFO,opportunities):
     return suggestions
 
 def display_templates(suggestions, contactINFO, opportunities):
+    """ 
+    Displays suggestions and after choosing one prompts for more information or shows full template
+    """
     print("What template would you like to see?")
     y = 1
     for suggest in suggestions: 
@@ -396,9 +429,6 @@ def display_templates(suggestions, contactINFO, opportunities):
         print(" -------------------------------------------------------------------------------------------------------------------------------------------------- ")
         print(suggestions[suggestionNumber]["Template"])
     return suggestionNumber
-
-
-#def linkedin():
 
 
 if __name__ == "__main__":
@@ -524,7 +554,7 @@ if __name__ == "__main__":
             
             linkedin = True
             while linkedin == True:
-                reportdecision = input(f"Do You Want to Attach a Linkedin Report of People that Work at {contactINFO['Company']} (y/n): ")
+                reportdecision = input(f"Do You Want to Attach a LinkedIn Report of People that Work at {contactINFO['Company']} (y/n): ")
                 if reportdecision == "y" or reportdecision == "Y" or reportdecision == "yes" or reportdecision == "YES" or reportdecision == "Yes":
                     print("The Browser Will Open and Gather Your Report")
                     time.sleep(1)

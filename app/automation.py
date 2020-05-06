@@ -9,6 +9,30 @@ from gspread_formatting import *
 from networking import suggestions_func
 
 
+
+# Here is the suggested template for the email that is being sent via heroku
+# 
+# 
+# subject = (f"[Modern Dealbook] Automated Requested Suggestion for {contactINFO['First Name']} {contactINFO['Last Name']} ")
+# 
+# 
+# 
+# html = f"""
+# <img src="https://i0.wp.com/arielle.com.au/wp-content/uploads/2016/04/urban-nyc-light.jpg">
+# 
+# <h3> Hi, {yourcontactINFO['Your First Name']}! </h3>
+# <h4> We noticed its been a while since you talked to {contactINFO['First Name']} {contactINFO['Last Name']} at {contactINFO['Company']} </h4>
+# <h4> We compiled a suggested email for you to send to {contactINFO['First Name']} to touch base and keep the relationship alive! </h4>
+# 
+# {suggestions[suggestionNumber]['Template']} - > THIS SYNTAX IS WRONG BUT IT SHOULD BE A DIRECT REFERENCE TO THE LIST OF DICTIONARIES AND IT SHOULD CALL FOR THE CATCH UP ONE
+
+# <h4> Feel Free to Copy and Paste this Draft to send to {contactINFO['First Name']} at {contactINFO['Email']} </h4>
+# 
+# <h4> Dont Forget To Proof Read!</h4>
+# 
+# """
+
+
 format_highlight = cellFormat(
     backgroundColor = color(10, 10, 200),
     textFormat =textFormat(bold=False) , 
