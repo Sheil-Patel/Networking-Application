@@ -318,7 +318,7 @@ def send_email(subject, html, yourcontactINFO):
                     print("Oops! An Error Occured While Trying to Send Email!")
                     print("Please Ensure That You Have Entered a Correctly Formatted Email in Your Spreadsheet!")
 
-                return response
+                return response.status_code
             except Exception as e:
                 print("OOPS", e.message)
                 return None
@@ -615,6 +615,7 @@ if __name__ == "__main__":
             """
             
             send_email(subject, html, yourcontactINFO)
+           
         
 
 

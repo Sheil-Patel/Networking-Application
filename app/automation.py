@@ -76,7 +76,6 @@ if __name__ == "__main__":
   sheet2 = doc.worksheet(SHEET_NAME2)
   rows2 = sheet2.get_all_records()
   
-  
   last_notification_info = []
   last_notification = sheet.col_values(11)
   remove = last_notification.pop(0) #removes header
