@@ -94,11 +94,18 @@ Instructions for how to install can be found here: https://chromedriver.chromium
 
 Once you have downloaded the file, place it somewhere for later use such as your desktop. 
 
-Once you have relocated it, copy the path name and within the `def link(contactINFO):` function place the path name below. 
+Once you have relocated it, copy the path name and insert it in a .env file like below
 
 ```sh
-driver = webdriver.Chrome('ENTER_PATH_NAME_HERE')
+PATH_NAME = "/Users/Bill/Desktop/chromedriver"
 ```
+
+Also, you will need to add your linkedin username and password in the .env file like below
+```sh
+USERNAME1 = "example@georgetown.edu"
+PASSWORD = "starwars123"
+```
+
 
 ## Running the program
 

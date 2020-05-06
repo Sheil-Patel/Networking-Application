@@ -34,28 +34,29 @@ def link(contactINFO):
 
     
 
-    driver = webdriver.Chrome('/Users/cool4/Desktop/chromedriver')
-
-    driver.get('https://www.linkedin.com/')
-
-    driver.find_element_by_xpath('//a[text()="Sign in"]').click()
+ 
     
     load_dotenv()
     PASSWORD = os.environ.get("PASSWORD")
     USERNAME = os.environ.get("USERNAME1")
-    print(USERNAME)
-    
+    Path = os.environ.get("PATH_NAME")
+    driver = webdriver.Chrome(Path)
+    #driver = webdriver.Chrome('/Users/cool4/Desktop/chromedriver')
+
+    driver.get('https://www.linkedin.com/')
+
+    driver.find_element_by_xpath('//a[text()="Sign in"]').click()
 
     time.sleep(1)
 
 
     username_input = driver.find_element_by_name('session_key')
     username_input.send_keys(USERNAME)
-    #username_input.send_keys("sheilprempatel@gmail.com")
+    #username_input.send_keys("example")
 
     password_input = driver.find_element_by_name('session_password')
     password_input.send_keys(PASSWORD)
-    #password_input.send_keys("Soccerlinkedin2018!")
+    #password_input.send_keys("example")
 
 
     # click on the sign in button
@@ -78,7 +79,7 @@ def link(contactINFO):
 
     linkcontacts = []
     # visit each profile in linkedin and grab detail we want to get
-    breakpoint()
+    
     for profile in profiles:
         driver.get(profile)
 
