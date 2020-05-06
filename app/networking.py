@@ -433,6 +433,9 @@ def display_templates(suggestions, contactINFO, opportunities):
     return suggestionNumber
 
 def get_yourContactINFO(rows2):
+    """ 
+    Function that returns your personal contact info details
+    """
     yourcontactINFO = rows2[0]
     return yourcontactINFO
 
