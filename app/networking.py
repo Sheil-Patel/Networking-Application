@@ -79,7 +79,7 @@ def link(contactINFO):
 
     linkcontacts = []
     # visit each profile in linkedin and grab detail we want to get
-    
+
     for profile in profiles:
         driver.get(profile)
 
@@ -469,7 +469,7 @@ if __name__ == "__main__":
     print_personal_headers(rows2, sheet2) 
 
     while True:
-        print("\n Hi, this is Donnie Azoff, your Networking Virtual Assistant, how may I help you today?\n")
+        print("\n Hi, this is Azoff, your Networking Virtual Assistant, how may I help you today?\n")
         choice = input("Enter 1 to input new contact information, Enter 2 to Read your contact information, Enter 3 to receive suggestions, Enter 4 to update your personal information, Enter 5 to Quit   \n")
         
         
