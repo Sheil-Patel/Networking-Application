@@ -122,7 +122,11 @@ https://github.com/prof-rossetti/intro-to-python/blob/master/notes/clis/heroku.m
 ```
 Once you have created an application on Heroku, you must do the following steps. If are having trouble, reference the link above:
 
-1. Push your code to heroku
+1. Push your code to Heroku using
+```sh
+git push heroku master
+```
+2. When you are in your application on the Heroku website,go to the "settings" tab and add all your environment variables from your .env folder
 2. Go to "Applications" and enable the Heroku Scheduler to run the code below once daily
 
 ```sh
