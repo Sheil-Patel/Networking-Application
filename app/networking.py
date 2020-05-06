@@ -17,7 +17,7 @@ from gspread_formatting import *
 from pprint import pprint
 
 ##okay all set!! 
-
+## Bet all good - Sheil
 ### Formatting Definitions - use any of these for the last parameter in the 'format_cell_range() function' 
 # detailed notes found here:     https://stackoverflow.com/questions/54179490/gspread-how-to-change-the-color-of-an-entire-row
 
