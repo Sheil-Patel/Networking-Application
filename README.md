@@ -24,7 +24,7 @@ Azoff stores your contact information on a google sheet that is only accessible 
 ### Repo-Setup
 Use the GitHub.com online interface to create a new remote project repository called something like "Azoff". When prompted by the GitHub.com online interface, let's get in the habit of adding a "README.md" file and a Python-flavored ".gitignore" file (and also optionally a "LICENSE") during the repo creation process. After this process is complete, you should be able to view the repo on GitHub.com at an address like `https://github.com/YOUR_USERNAME/Azoff`.
 
-After creating the remote repo, use GitHub Desktop software or the command-line to download or "clone" it onto your computer. Choose a familiar download location like the Desktop.
+After creating the remote repo, use GitHub Desktop software or the command-line to fork this repo. Then, download or "clone" it onto your computer. Choose a familiar download location like the Desktop.
 
 After cloning the repo, navigate there from the command-line:
 
@@ -83,6 +83,21 @@ Next you will need to create title the first sheet "Data" and add another sheet 
 ```sh
 SHEET_NAME = Data
 SHEET_NAME2 = Personal Info
+```
+
+## Linkedin Scraping Instructions
+Azoff lets you scrape linkedin in order to help you find people at the same firm as your contact book! 
+
+In order to set this up you will need to install chromedriver onto your computer. 
+
+Instructions for how to install can be found here: https://chromedriver.chromium.org/
+
+Once you have downloaded the file, place it somewhere for later use such as your desktop. 
+
+Once you have relocated it, copy the path name and within the `sh def link(contactINFO):` function place the path name below. 
+
+```sh
+driver = webdriver.Chrome('ENTER_PATH_NAME_HERE')
 ```
 
 ## Running the program
