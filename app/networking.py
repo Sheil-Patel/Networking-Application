@@ -32,28 +32,30 @@ def link(contactINFO):
     #writer = csv.writer(open('testing.csv', 'w')) # preparing csv file to store parsing result later
     #writer.writerow(['name', 'job_title', 'schools', 'location', 'ln_url'])
 
-    load_dotenv()
+    
 
-    driver = webdriver.Chrome('/Users/alexcastro/Desktop/chromedriver')
+    driver = webdriver.Chrome('/Users/cool4/Desktop/chromedriver')
 
     driver.get('https://www.linkedin.com/')
 
     driver.find_element_by_xpath('//a[text()="Sign in"]').click()
-
-    PASSWORD = os.environ.get("PASSWORD")
-    USERNAME = os.environ.get("USERNAME")
     
+    load_dotenv()
+    USERNAME = os.environ.get("PASSWORD")
+    PASSWORD = os.environ.get("USERNAME")
+
+   
 
     time.sleep(1)
 
 
     username_input = driver.find_element_by_name('session_key')
-    username_input.send_keys(USERNAME)
-    #username_input.send_keys("ac1950@georgetown.edu")
+    #username_input.send_keys(USERNAME)
+    username_input.send_keys("sheilprempatel@gmail.com")
 
     password_input = driver.find_element_by_name('session_password')
-    password_input.send_keys(PASSWORD)
-    #password_input.send_keys("Networkingapplication")
+    #password_input.send_keys(pass_name)
+    password_input.send_keys("Soccerlinkedin2018!")
 
     # click on the sign in button
     # we're finding Sign in text button as it seems this element is seldom to be changed
@@ -276,9 +278,9 @@ def writing_to_sheet(info,sheet,rows):
     print("NEW RECORD:")
     print(next_row)
     print("-----------------")
-    print("RESPONSE:")
-    print(type(response)) #> dict
-    print(response) #> {'spreadsheetId': '___', 'updatedRange': '___', 'updatedRows': 1, 'updatedColumns': 5, 'updatedCells': 5}
+    #print("RESPONSE:")
+    #print(type(response)) #> dict
+    #print(response) #> {'spreadsheetId': '___', 'updatedRange': '___', 'updatedRows': 1, 'updatedColumns': 5, 'updatedCells': 5}
 def send_email(subject, html, yourcontactINFO):
     """ 
     Sends email. Passes in subject, html, and contact information from spreadsheet 
@@ -430,6 +432,9 @@ def display_templates(suggestions, contactINFO, opportunities):
         print(suggestions[suggestionNumber]["Template"])
     return suggestionNumber
 
+def get_yourContactINFO(rows2):
+    yourcontactINFO = rows2[0]
+    return yourcontactINFO
 
 if __name__ == "__main__":
     #
@@ -539,7 +544,8 @@ if __name__ == "__main__":
             sheet2 = doc.worksheet(SHEET_NAME2)
             rows2 = sheet2.get_all_records()      
 
-            yourcontactINFO = rows2[0]   #Gets your contact info
+            yourcontactINFO = get_yourContactINFO(rows2)
+            
             contactINFO = get_suggestion(rows) #Gets your suggestion contact info
             opportunities = ""
 
