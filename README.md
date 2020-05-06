@@ -94,7 +94,7 @@ Instructions for how to install can be found here: https://chromedriver.chromium
 
 Once you have downloaded the file, place it somewhere for later use such as your desktop. 
 
-Once you have relocated it, copy the path name and within the `sh def link(contactINFO):` function place the path name below. 
+Once you have relocated it, copy the path name and within the `def link(contactINFO):` function place the path name below. 
 
 ```sh
 driver = webdriver.Chrome('ENTER_PATH_NAME_HERE')
