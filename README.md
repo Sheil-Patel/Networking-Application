@@ -1,5 +1,5 @@
 # Azoff Networking Application
-Welcome, say hello to our virtual networking assistant Azoff. After following the instruction below, you should be able to network more effectively using Azoff. Once you start Azoff, you will be prompted to input some information about yourself so we can tailor the program to you. After that you can navigate our menu and activate many of Azoff's functionalities listed below. Addtionally, Azoff uses a google sheet data store, which stores all your contacts - more information on this is stated below
+Welcome, say hello to our virtual networking assistant Azoff. After following the instruction below, you should be able to network more effectively using Azoff. Azoff allows you to store and manage networking contacts on a Google Sheets more effectively. Azoff can let you know when its time to contact someone again, suggest emails to send, help you craft emails after interactions, and scrape LinkedIn for suggested connections. Once you start Azoff, you will be prompted to input some information about yourself so we can tailor the program to you. After that you can navigate our menu and activate many of Azoff's functionalities listed below. Addtionally, Azoff uses a google sheet data store, which stores all your contacts - more information on this is stated below.
 
 ## Menu Options
 
