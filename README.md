@@ -1,5 +1,5 @@
 # Azoff Networking Application
-Welcome, say hello to our virtual networking assisstant Azoff. After following the instruction below, you should be able to network more effectively using Azoff. Once you start Azoff, you will be prompted to input some information about yourself so we can tailor the program to you. After that you can navigate our menu and activate the many Azoff's functionalities listed below. Addtionally, Azoff uses a google sheet data store, which stores all your contacts - more information on this is stated below
+Welcome, say hello to our virtual networking assistant Azoff. After following the instruction below, you should be able to network more effectively using Azoff. Once you start Azoff, you will be prompted to input some information about yourself so we can tailor the program to you. After that you can navigate our menu and activate many of Azoff's functionalities listed below. Addtionally, Azoff uses a google sheet data store, which stores all your contacts - more information on this is stated below
 
 ## Menu Options
 
@@ -10,7 +10,7 @@ Welcome, say hello to our virtual networking assisstant Azoff. After following t
 
 ### External Google Sheet Datastore
 
-Azoff stores your contact information on a google sheet only accessable to you. On that sheet you will be able to see all the information on your inputted contacts such as their company, name, email, phone number, where and when you ment, and any other additional notes. Additionally, it will store the date you last contacted them and will send you optional push notifications if you have not been in contact with a person in your networking for 15 days. This latter part is done through using the "Heroku Scheduler" application, which will be explained below. 
+Azoff stores your contact information on a google sheet that is only accessible to you. On that sheet, you will be able to see all the information on your inputted contacts such as their company, name, email, phone number, where and when you ment, and any other additional notes. Additionally, it will store the date you last contacted them and will send you optional push notifications if you have not been in contact with a person in your network for 15 days. This latter part is done by using the "Heroku Scheduler" application, which will be explained below. 
 
 
 ## Prerequisites
@@ -62,13 +62,13 @@ Additionally, you will need to specify your own email address
 MY_EMAIL_ADDRESS="abc123@gmail.com"
 ```
 ## Google Drive & Sheets API
-In order to get access to a google sheet with your contact's information, you will need to set up the google drive and sheets API. Instructions for that can be found at this link. Dont forget to create an "auth" folder in the root repository of your directory!
+In order to get access to a google sheet with your contact's information, you will need to set up the google drive and sheets API. Instructions for that can be found at this link. Dont forget to create an "auth" folder in the root folder of your directory!
 
 ```sh
 https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/packages/gspread.md
 ```
 
-Once you have completed those instructions and successfully linked your project to a google sheet, you will need to add the Google Sheet ID into the environment Variables. You can find this by looking at the URL of your Google Sheet. If the URL of your Google Sheet looks like this...
+Once you have completed those instructions and successfully linked your project to a google sheet, you will need to add the Google Sheet ID into the environment variables. You can find this by looking at the URL of your Google Sheet. If the URL of your Google Sheet looks like this...
 ```sh
 https://docs.google.com/spreadsheets/d/1RieDnIbsiAxJRcgQ9ZBjtULkyZDbJJ887l_vAkk_GQl/edit#gid=0
 ```
