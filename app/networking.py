@@ -16,6 +16,106 @@ from sendgrid.helpers.mail import Mail
 from gspread_formatting import *
 from pprint import pprint
 
+import csv
+from parsel import Selector
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+
+def link(): 
+    #writer = csv.writer(open('testing.csv', 'w')) # preparing csv file to store parsing result later
+    #writer.writerow(['name', 'job_title', 'schools', 'location', 'ln_url'])
+
+    load_dotenv()
+
+    driver = webdriver.Chrome('/Users/alexcastro/Desktop/chromedriver')
+
+    driver.get('https://www.linkedin.com/')
+
+    driver.find_element_by_xpath('//a[text()="Sign in"]').click()
+
+    PASSWORD = os.environ.get("PASSWORD")
+    USERNAME = os.environ.get("USERNAME")
+    
+
+    time.sleep(1)
+
+
+    username_input = driver.find_element_by_name('session_key')
+    username_input.send_keys(USERNAME)
+    #username_input.send_keys("ac1950@georgetown.edu")
+
+    password_input = driver.find_element_by_name('session_password')
+    password_input.send_keys(PASSWORD)
+    #password_input.send_keys("Networkingapplication")
+
+    # click on the sign in button
+    # we're finding Sign in text button as it seems this element is seldom to be changed
+    driver.find_element_by_xpath('//button[text()="Sign in"]').click()
+
+    driver.get('https://www.google.com/')
+
+    search_input = driver.find_element_by_name('q')
+    # let google find any linkedin user with keyword "python developer" and "San Francisco"
+    #{contactINFO['Company']}
+    search_input.send_keys(f'site:linkedin.com/in OR site:linkedin.com/pub -pub.dir AND "Bank of America" ')
+
+    search_input.send_keys(Keys.RETURN)
+
+    # grab all linkedin profiles from first page at Google
+    profiles = driver.find_elements_by_xpath('//*[@class="r"]/a[1]')
+    profiles = [profile.get_attribute('href') for profile in profiles]
+
+    linkcontacts = []
+    # visit each profile in linkedin and grab detail we want to get
+    for profile in profiles:
+        driver.get(profile)
+
+        try:
+            sel = Selector(text=driver.page_source)
+            name = sel.xpath('//title/text()').extract_first().split(' | ')[0]
+            job_title = sel.xpath('//h2/text()').extract_first().strip()
+            schools = ', '.join(sel.xpath('//*[contains(@class, "pv-entity__school-name")]/text()').extract())
+            location = sel.xpath('//*[@class="t-16 t-black t-normal inline-block"]/text()').extract_first().strip()
+            ln_url = driver.current_url
+            """
+            you can add another logic in case parsing is failed, ie because no job title is found
+            because the linkedin user isn't add it
+            """
+        except:
+            print('failed')
+
+            #"name": name,
+            #"jobtitle": job_title,
+            #"school": schools,
+            #"location": location,
+            #"link": ln_url
+        # print to console for testing purpose
+        linkedinscrape = {}
+
+        linkedinscrape["name"] = (f"<p> {name} </p>")
+        linkedinscrape["jobtitle"]= (f"<p>{job_title} </p>")
+        linkedinscrape["school"] = (f"<p> {schools} </p>")
+        linkedinscrape["location"] = (f"<p> {location} </p")
+        linkedinscrape["link"] = (f"<p> {ln_url} </p>")
+
+        
+
+        linkcontacts.append(linkedinscrape.copy())
+
+    driver.quit()
+
+    #for contact in linkcontacts:
+    #    print(contact["name"])
+    #    print(contact["jobtitle"])
+    #    print(contact["school"])
+    #    print(contact["location"])
+    #    print(contact["link"])
+    #    print("----------------------------------------------------------------------------")
+    return linkcontacts
+
+
+
 ##okay all set!! 
 ## Bet all good - Sheil
 ### Formatting Definitions - use any of these for the last parameter in the 'format_cell_range() function' 
@@ -296,6 +396,9 @@ def display_templates(suggestions, contactINFO, opportunities):
     return suggestionNumber
 
 
+#def linkedin():
+
+
 if __name__ == "__main__":
     #
     # AUTHORIZATION for google sheets and sendgrid
@@ -414,11 +517,26 @@ if __name__ == "__main__":
         
             suggestionNumber = display_templates(suggestions, contactINFO, opportunities) #Outputs email suggestions and asks if you want a template sent to your email
    
-
-
+            linkedin = True
+            while linkedin == True:
+                reportdecision = input(f"Do You Want to Attach a Linkedin Report of People that Work at {contactINFO['Company']} (y/n)")
+                if reportdecision == "y" or reportdecision == "Y" or reportdecision == "yes" or reportdecision == "YES" or reportdecision == "Yes":
+                    print("The Browser Will Open and Gather Your Report")
+                    time.sleep(1)
+                    print("Please wait...")
+                    time.sleep(3)
+                    printablelinkedin = link()
+                    header = (f"<h4> We Found Some Contacts for you that work at {contactINFO['Company']} </h4>")
+                    linkedin = False
+                elif reportdecision == "n" or reportdecision == "N" or reportdecision == "no" or reportdecision == "NO" or reportdecision == "No":
+                    print("Okay No Report Will Be Sent!")
+                    header = ""
+                    printablelinkedin = "You Selected Not to Have a Report Sent"
+                    linkedin = False
             
 
             subject = (f"[Modern Dealbook] Your Requested Suggestion for {contactINFO['First Name']} {contactINFO['Last Name']} ")
+
 
 
             html = f"""
@@ -432,6 +550,13 @@ if __name__ == "__main__":
             <h4> Feel Free to Copy and Paste this Draft to send to {contactINFO['First Name']} at {contactINFO['Email']} </h4>
             
             <h4> Dont Forget To Proof Read and Attach a Resume! </h4>
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS2mf3rA_gV0LbWzbZqdp20ZwefFrvuemSTlyzoVc4Tmd3nbCZf&usqp=CAU">
+
+            {header}
+            <h4> {printablelinkedin} <h/4>
+
+
             """
             
             send_email(subject, html, yourcontactINFO)

@@ -6,3 +6,6 @@ pytest
 gspread 
 oauth2client
 gspread_formatting
+
+parsel
+selenium
