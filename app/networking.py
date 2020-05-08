@@ -217,7 +217,7 @@ def get_email():
 def get_phone_number():
     """ Gets Phone Number for contact entered"""
     
-    phone_number = input("Please input your phone number\n")
+    phone_number = input("Please input a phone number\n")
     return phone_number
 def get_where_we_met():
     """ gets meeting place for contact entered""" 
@@ -529,7 +529,10 @@ if __name__ == "__main__":
             doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
             sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
             rows = sheet.get_all_records() #> <class 'list'>
-            reading_from_sheet(doc, rows)
+            if not rows:
+                print("Please hit menu option '1' and input a contact first")
+            else:
+                reading_from_sheet(doc, rows)
 
 
 
@@ -546,77 +549,81 @@ if __name__ == "__main__":
             sheet2 = doc.worksheet(SHEET_NAME2)
             rows2 = sheet2.get_all_records()      
 
-            yourcontactINFO = get_yourContactINFO(rows2)
-            
-            contactINFO = get_suggestion(rows) #Gets your suggestion contact info
-            opportunities = ""
+            if not rows:
+                print("Please hit menu option '1' and input a contact first")
+            else:
+                reading_from_sheet(doc, rows)
+                yourcontactINFO = get_yourContactINFO(rows2)
 
+                contactINFO = get_suggestion(rows) #Gets your suggestion contact info
+                opportunities = ""
+
+
+                suggestions = suggestions_func(contactINFO,yourcontactINFO,opportunities) #This function stores the templates
+
+
+
+                suggestionNumber = display_templates(suggestions, contactINFO, opportunities) #Outputs email suggestions and asks if you want a template sent to your email
+
+            
+            
+                linkedin = True
+                while linkedin == True:
+                    reportdecision = input(f"Do You Want to Attach a LinkedIn Report of People that Work at {contactINFO['Company']} (y/n): ")
+                    if reportdecision == "y" or reportdecision == "Y" or reportdecision == "yes" or reportdecision == "YES" or reportdecision == "Yes":
+                        print("The Browser Will Open and Gather Your Report")
+                        time.sleep(1)
+                        print("Please wait...")
+                        time.sleep(3)
     
-            suggestions = suggestions_func(contactINFO,yourcontactINFO,opportunities) #This function stores the templates
-
-
-        
-            suggestionNumber = display_templates(suggestions, contactINFO, opportunities) #Outputs email suggestions and asks if you want a template sent to your email
-
-            
-            
-            linkedin = True
-            while linkedin == True:
-                reportdecision = input(f"Do You Want to Attach a LinkedIn Report of People that Work at {contactINFO['Company']} (y/n): ")
-                if reportdecision == "y" or reportdecision == "Y" or reportdecision == "yes" or reportdecision == "YES" or reportdecision == "Yes":
-                    print("The Browser Will Open and Gather Your Report")
-                    time.sleep(1)
-                    print("Please wait...")
-                    time.sleep(3)
-
-                    data = link(contactINFO)
-                    #header = data[0].keys()
-                    header = ""
-                    rows = [x.values() for x in data]
-                    printablelinkedin = tabulate.tabulate(rows, header)
+                        data = link(contactINFO)
+                        #header = data[0].keys()
+                        header = ""
+                        rows = [x.values() for x in data]
+                        printablelinkedin = tabulate.tabulate(rows, header)
+                    
+    
+    
+    
+    
+    
+    
+                        header = (f"<h4> We Found Some Contacts for you that work at {contactINFO['Company']} </h4>")
+                        linkedin = False
+                    elif reportdecision == "n" or reportdecision == "N" or reportdecision == "no" or reportdecision == "NO" or reportdecision == "No":
+                        print("Okay No Report Will Be Sent!")
+                        header = ""
+                        printablelinkedin = "You Selected Not to Have a Report Sent"
+                        linkedin = False
                 
-
-
-
-
-
-
-                    header = (f"<h4> We Found Some Contacts for you that work at {contactINFO['Company']} </h4>")
-                    linkedin = False
-                elif reportdecision == "n" or reportdecision == "N" or reportdecision == "no" or reportdecision == "NO" or reportdecision == "No":
-                    print("Okay No Report Will Be Sent!")
-                    header = ""
-                    printablelinkedin = "You Selected Not to Have a Report Sent"
-                    linkedin = False
-            
-
-            subject = (f"[Modern Dealbook] Your Requested Suggestion for {contactINFO['First Name']} {contactINFO['Last Name']} ")
-
-
-
-            html = f"""
-            <img src="https://i0.wp.com/arielle.com.au/wp-content/uploads/2016/04/urban-nyc-light.jpg">
-            
-            <h3> Hi, {yourcontactINFO['Your First Name']}! </h3>
-            <h4> Here is Your Requested Suggesstion for {contactINFO['First Name']} {contactINFO['Last Name']} at {contactINFO['Company']} </h4>
-            
-            
-            {suggestions[suggestionNumber]['Template']}
-            <h4> Feel Free to Copy and Paste this Draft to send to {contactINFO['First Name']} at {contactINFO['Email']} </h4>
-            
-            <h4> Dont Forget To Proof Read and Attach a Resume! </h4>
-
-            <h4> Here Are The Notes You Have Written for {contactINFO['First Name']}: {contactINFO['Notes']} </h4>
-
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS2mf3rA_gV0LbWzbZqdp20ZwefFrvuemSTlyzoVc4Tmd3nbCZf&usqp=CAU">
-
-            {header}
-            <h4> {printablelinkedin} <h/4>
-
-
-            """
-            
-            send_email(subject, html, yourcontactINFO)
+    
+                subject = (f"[Modern Dealbook] Your Requested Suggestion for {contactINFO['First Name']} {contactINFO['Last Name']} ")
+    
+    
+    
+                html = f"""
+                <img src="https://i0.wp.com/arielle.com.au/wp-content/uploads/2016/04/urban-nyc-light.jpg">
+                
+                <h3> Hi, {yourcontactINFO['Your First Name']}! </h3>
+                <h4> Here is Your Requested Suggesstion for {contactINFO['First Name']} {contactINFO['Last Name']} at {contactINFO['Company']} </h4>
+                
+                
+                {suggestions[suggestionNumber]['Template']}
+                <h4> Feel Free to Copy and Paste this Draft to send to {contactINFO['First Name']} at {contactINFO['Email']} </h4>
+                
+                <h4> Dont Forget To Proof Read and Attach a Resume! </h4>
+    
+                <h4> Here Are The Notes You Have Written for {contactINFO['First Name']}: {contactINFO['Notes']} </h4>
+    
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS2mf3rA_gV0LbWzbZqdp20ZwefFrvuemSTlyzoVc4Tmd3nbCZf&usqp=CAU">
+    
+                {header}
+                <h4> {printablelinkedin} <h/4>
+    
+    
+                """
+                
+                send_email(subject, html, yourcontactINFO)
            
         
 
